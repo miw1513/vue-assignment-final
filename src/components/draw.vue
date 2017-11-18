@@ -10,6 +10,17 @@
 </template>
 
 <script>
+import firebase from 'firebase'
+let config = {
+  apiKey: 'AIzaSyDdq92cBZ4Mv5VdbHGfVnE0q4ZlTctvIeg',
+  authDomain: 'vue-assignment.firebaseapp.com',
+  databaseURL: 'https://vue-assignment.firebaseio.com',
+  projectId: 'vue-assignment',
+  storageBucket: 'vue-assignment.appspot.com',
+  messagingSenderId: '812344967443'
+}
+firebase.initializeApp(config)
+const db = firebase.database()
 export default {
   name: 'HelloWorld',
   data () {
@@ -58,6 +69,7 @@ export default {
         x,
         y
       })
+      db.ref('draw/').set(this.picture)
     }
   },
   mounted () {
