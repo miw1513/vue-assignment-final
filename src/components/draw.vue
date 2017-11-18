@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1>Hello</h1>
-    <button @click="copy">copy</button>
+    <button class="button is-large" @click="copy">copy</button>
     <br><br>
     <hr>
     <canvas id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
@@ -45,7 +45,6 @@ export default {
       this.drawing = false
     },
     drawLine (event) {
-      console.log(event)
       if (this.drawing) {
         this.ctx.lineTo(event.offsetX, event.offsetY)
         this.ctx.stroke()
