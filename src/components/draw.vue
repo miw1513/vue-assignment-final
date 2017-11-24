@@ -1,6 +1,5 @@
 <template>
   <div class="hello">
-    <h1>Hello</h1>
     <button class="button is-large" @click="copy">copy</button>
     <br><br>
     <hr>
@@ -28,23 +27,31 @@ export default {
       ctx: {},
       ctx2: {},
       drawing: false,
-      picture: []
+      picture: [],
+      data: []
     }
+  },
+  computed: {
   },
   methods: {
     copy () {
-      this.picture.forEach(point => {
-        switch (point.type) {
-          case 'moveTo':
-            this.ctx2.moveTo(point.x, point.y)
-            break
-          case 'lineTo':
-            this.ctx2.lineTo(point.x, point.y)
-            break
-          case 'stroke':
-            this.ctx2.stroke()
-            break
-        }
+      console.log('this is copy')
+      var ref = firebase.database().ref('draw/')
+      ref.once('value').then(function (snapshot) {
+        this.data = snapshot.val()
+      })
+      this.data.map((data) => {
+        switch (data.type) {
+            case 'moveTo':
+              this.ctx2.moveTo(data.x, data.y)
+              break
+            case 'lineTo':
+              this.ctx2.lineTo(data.x, data.y)
+              break
+            case 'stroke':
+              this.ctx2.stroke()
+              break
+          }
       })
     },
     startDraw (event) {
@@ -70,6 +77,7 @@ export default {
         y
       })
       db.ref('draw/').set(this.picture)
+      this.copy()
     }
   },
   mounted () {
