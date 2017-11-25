@@ -10,6 +10,7 @@
 
 <script>
 import firebase from 'firebase'
+import _ from 'underscore'
 let config = {
   apiKey: 'AIzaSyDdq92cBZ4Mv5VdbHGfVnE0q4ZlTctvIeg',
   authDomain: 'vue-assignment.firebaseapp.com',
@@ -20,6 +21,11 @@ let config = {
 }
 firebase.initializeApp(config)
 const db = firebase.database()
+
+function test () {
+  console.log('3333333')
+}
+
 export default {
   name: 'HelloWorld',
   data () {
@@ -28,30 +34,32 @@ export default {
       ctx2: {},
       drawing: false,
       picture: [],
-      data: []
+      data: [],
+      c: {},
+      c2: {},
+      timeout: undefined
     }
   },
   computed: {
   },
   methods: {
     copy () {
-      console.log('this is copy')
       var ref = firebase.database().ref('draw/')
-      ref.once('value').then(function (snapshot) {
-        this.data = snapshot.val()
-      })
-      this.data.map((data) => {
-        switch (data.type) {
+      ref.on('value').then(snapshot => {
+        const drawData = snapshot.val()
+        Object.keys(drawData).map((key, index) => {
+          switch (drawData[key].type) {
             case 'moveTo':
-              this.ctx2.moveTo(data.x, data.y)
+              this.ctx2.moveTo(drawData[key].x, drawData[key].y)
               break
             case 'lineTo':
-              this.ctx2.lineTo(data.x, data.y)
+              this.ctx2.lineTo(drawData[key].x, drawData[key].y)
               break
             case 'stroke':
               this.ctx2.stroke()
               break
           }
+        })
       })
     },
     startDraw (event) {
@@ -77,16 +85,17 @@ export default {
         y
       })
       db.ref('draw/').set(this.picture)
+      // _.debounce(this.copy, 1000)
+      // _.debounce(test, 500)
       this.copy()
     }
   },
   mounted () {
-    var c = document.getElementById('myCanvas')
-    this.ctx = c.getContext('2d')
+    this.c = document.getElementById('myCanvas')
+    this.ctx = this.c.getContext('2d')
     this.ctx.lineWidth = 5
-
-    var c2 = document.getElementById('myCanvas2')
-    this.ctx2 = c2.getContext('2d')
+    this.c2 = document.getElementById('myCanvas2')
+    this.ctx2 = this.c2.getContext('2d')
     this.ctx2.lineWidth = 5
   }
 }
