@@ -1,16 +1,17 @@
 <template>
   <div class="hello">
-    <button class="button is-large" @click="copy">copy</button>
+    <h1>{{showResult}}</h1>
     <br><br>
     <hr>
     <canvas id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
-    <canvas id="myCanvas2" width="500" height="500"></canvas>
+    <!-- <canvas id="myCanvas2" width="500" height="500"></canvas> -->
+    <input type="text" v-model="resultQuestion"><button @click="checkResult(resultQuestion)">ส่งคำตอบ</button>
+    
   </div>
 </template>
 
 <script>
 import firebase from 'firebase'
-import _ from 'underscore'
 let config = {
   apiKey: 'AIzaSyDdq92cBZ4Mv5VdbHGfVnE0q4ZlTctvIeg',
   authDomain: 'vue-assignment.firebaseapp.com',
@@ -21,11 +22,6 @@ let config = {
 }
 firebase.initializeApp(config)
 const db = firebase.database()
-
-function test () {
-  console.log('3333333')
-}
-
 export default {
   name: 'HelloWorld',
   data () {
@@ -37,31 +33,34 @@ export default {
       data: [],
       c: {},
       c2: {},
-      timeout: undefined
+      dataQuestion: [],
+      resultQuestion: '',
+      showResult: '',
+      countQuestion: 0
     }
   },
   computed: {
   },
   methods: {
-    copy () {
-      var ref = firebase.database().ref('draw/')
-      ref.on('value').then(snapshot => {
-        const drawData = snapshot.val()
-        Object.keys(drawData).map((key, index) => {
-          switch (drawData[key].type) {
-            case 'moveTo':
-              this.ctx2.moveTo(drawData[key].x, drawData[key].y)
-              break
-            case 'lineTo':
-              this.ctx2.lineTo(drawData[key].x, drawData[key].y)
-              break
-            case 'stroke':
-              this.ctx2.stroke()
-              break
-          }
-        })
-      })
-    },
+    // copy () {
+    //   var ref = firebase.database().ref('draw/match')
+    //   ref.once('value').then(snapshot => {
+    //     const drawData = snapshot.val()
+    //     Object.keys(drawData).map((key, index) => {
+    //       switch (drawData[key].type) {
+    //         case 'moveTo':
+    //           this.ctx2.moveTo(drawData[key].x, drawData[key].y)
+    //           break
+    //         case 'lineTo':
+    //           this.ctx2.lineTo(drawData[key].x, drawData[key].y)
+    //           break
+    //         case 'stroke':
+    //           this.ctx2.stroke()
+    //           break
+    //       }
+    //     })
+    //   })
+    // },
     startDraw (event) {
       this.ctx.moveTo(event.offsetX, event.offsetY)
       this.saveData('moveTo', event.offsetX, event.offsetY)
@@ -78,25 +77,42 @@ export default {
         this.saveData('stroke', 0, 0)
       }
     },
+    checkResult (result) {
+      if (this.dataQuestion[this.countQuestion] === result) {
+        //push คะแนนเข้า firebase ตาม user ที่ได้คะแนน
+        //push ลำดับคำถามเข้า firebase
+        this.countQuestion++
+        this.showResult = 'คำตอบถูกต้อง'
+      } else {
+        this.showResult = 'คำตอบไม่ถูกต้อง'
+      }
+    },
     saveData (type, x, y) {
       this.picture.push({
         type,
         x,
         y
       })
-      db.ref('draw/').set(this.picture)
-      // _.debounce(this.copy, 1000)
-      // _.debounce(test, 500)
-      this.copy()
+      db.ref('draw/match').set(this.picture)
+      // this.copy()
     }
   },
   mounted () {
     this.c = document.getElementById('myCanvas')
     this.ctx = this.c.getContext('2d')
     this.ctx.lineWidth = 5
-    this.c2 = document.getElementById('myCanvas2')
-    this.ctx2 = this.c2.getContext('2d')
-    this.ctx2.lineWidth = 5
+    // this.c2 = document.getElementById('myCanvas2')
+    // this.ctx2 = this.c2.getContext('2d')
+    // this.ctx2.lineWidth = 5
+    var ref = firebase.database().ref('question')
+    ref.once('value').then(snapshot => {
+      const questionData = snapshot.val()
+      Object.keys(questionData).map((key, index) => {
+        this.dataQuestion.push(questionData[key])
+      })
+    }
+    )
+    console.log(this.dataQuestion)
   }
 }
 </script>
