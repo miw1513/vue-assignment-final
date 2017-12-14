@@ -1,19 +1,4 @@
 <template>
-<<<<<<< HEAD
-<div class=HelloWorl>
-<center>
-<table border="5"  width="70%" height="50%" >
-                    <tr><td height="50"><center>Room</center></td></tr>
-                    <tr><td height="400"></td></tr>
-</table>
-<table border="5"  width="70%" height="50%" >
-                    <tr><td height="50"><center>join</center></td></tr>
-                    
-</table>
-</center>
-</div>
-
-=======
   <div class="hello">
     <div class="container">
       <button class="button is-primary" @click="createroom () "> CREATE ROOM </button>
@@ -36,7 +21,6 @@
       </div>
     
   </div>    
->>>>>>> bf9f2965f81d9b52ff1868dc6d6e3b0b53d2bf0c
 </template>
 
 <script>
@@ -85,11 +69,8 @@ export default {
 }
 </script>
 
-<<<<<<< HEAD
-=======
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
->>>>>>> bf9f2965f81d9b52ff1868dc6d6e3b0b53d2bf0c
 <style scoped>
 h1, h2 {
   font-weight: normal;

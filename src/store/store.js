@@ -137,11 +137,17 @@ export const store = new Vuex.Store({
           })
         })
         context.commit('setUserCreate', playerCreateOnce)
+        context.commit('setJoinMatch', '')
       })
     },
     joinRoom (context, idhost) {
       context.commit('setJoinMatch', idhost)
       router.push('/draw')
+    },
+    checkMatch (context) {
+      if (context.state.CurrentMatch === '') {
+        router.push('/lobby')
+      }
     }
   }
 })
