@@ -2,28 +2,47 @@
   <div class="hello">
     
     <br><br>
-    <hr>
 
     
     <!-- <canvas id="myCanvas2" width="500" height="500"></canvas> -->
-    <div class="columns">
+    <div class="columns is-gapless">
       <div class="column">
         <canvas id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
-        <input type="text" v-model="resultQuestion"><button @click="checkResult(resultQuestion)">ส่งคำตอบ</button>
+        <input type="text" class="" placeholder="" v-model="resultQuestion"><button @click="checkResult(resultQuestion)" class="button is-primary is-outlined">ส่งคำตอบ</button>
       </div>
+      <table class="table">
+        <tr>
+          <td><p v-for="resul in result">
+          {{resul}}
+        </p>
+        </td>
+        <td></td>
+          <td>
+          </td>
+        </tr>
+      </table>
+      <table >
+        <tr>
+          <td >
+        </td>
+        <td></td>
+          <td><br>
+            <P v-for="(show,index) in showResult">
+                {{showResult[index]}}
+              </P>
+          </td>
+        </tr>
+      </table>
       <div class="column is-one-fifth">
-      <p v-for="resul in result">
-      {{resul}}
-    </p>
+        
+      </div>
+      <div class="column is-half">
+          <div class="column is-one-quarter">
+              
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="column is-one-quarter">
-    <P v-for="(show,index) in showResult">
-      {{showResult[index]}}
-    </P>
-  </div>
-    </div>
-    
-  </div>
 </template>
 
 <script>
