@@ -1,19 +1,55 @@
 <template>
   <div class="hello">
-    
-    
-  </div>
+ 
+      <button class="button is-primary" @click="createroom () "> CREATE ROOM </button>
+    <br>
+       <div v-for="party in Partys">
+      {{party.idhost}}
+    </div>
+  </div>    
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'HelloWorld',
   data () {
     return {
     }
+  },
+  methods: {
+    ...mapActions([
+      'setting',
+      'saveData',
+      'setting',
+      'createparty',
+      'init',
+      'loadpartys'
+    ]),
+    createroom () {
+      var obj = {
+        idhost: this.keyPlayer,
+        idplayer1: '',
+        idplayer2: '',
+        idplayer3: '',
+        idplayer4: ''
+      }
+      this.createparty(obj)
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'keyPlayer',
+      'Partys'
+    ])
+  },
+  created () {
+    this.init()
+    this.loadpartys()
   }
 }
 </script>
+
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>

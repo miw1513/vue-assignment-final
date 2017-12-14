@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import login from '@/components/login'
 import draw from '@/components/draw'
 import hello from '@/components/HelloWorld'
+import lobby from '@/components/lobby'
 
 Vue.use(Router)
 
@@ -23,6 +24,12 @@ export default new Router({
       path: '/hello',
       name: 'hello',
       component: hello
+    },
+    {
+      path: '/lobby',
+      name: 'lobby',
+      component: lobby
     }
+
   ]
 })

@@ -17,9 +17,9 @@
     </p>
     </div>
     <div class="column is-one-quarter">
-    <P v-for="(show,index) in showResult">
+    <p v-for="(show,index) in showResult">
       {{showResult[index]}}
-    </P>
+    </p>
   </div>
     </div>
     

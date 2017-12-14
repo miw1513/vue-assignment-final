@@ -24,12 +24,15 @@ export const store = new Vuex.Store({
     user: {},
     isReady: false,
     dataQuestion: [],
-    keyPlayer: ''
+    keyPlayer: '',
+    Partys: ''
   },
   getters: {
     user: state => state.user,
     isReady: state => state.isReady,
-    dataQuestion: state => state.dataQuestion
+    dataQuestion: state => state.dataQuestion,
+    keyPlayer: state => state.keyPlayer,
+    Partys: state => state.Partys
   },
   mutations: {
     setReady (state) {
@@ -43,6 +46,9 @@ export const store = new Vuex.Store({
     },
     setKeyplayer (state, data) {
       state.keyPlayer = data
+    },
+    setPartys (state, data) {
+      state.Partys = data
     }
   },
   actions: {
@@ -75,7 +81,6 @@ export const store = new Vuex.Store({
           picture: user.photoURL,
           fb: user.providerData[0]
         }
-        
         db.ref('players').child(user.uid).set(tmp)
         context.commit('setKeyplayer', user.uid)
         context.commit('setUser', tmp)
@@ -103,6 +108,15 @@ export const store = new Vuex.Store({
     },
     saveData (context, picture) {
       db.ref('draw/match').push(picture)
+    },
+    createparty (context, Object) {
+      db.ref('partys').push(Object)
+    },
+    loadpartys (context) {
+      var ref = db.ref('partys')
+      ref.on('value', (snapshot) => {
+        context.commit('setPartys', snapshot.val())
+      })
     }
   }
 })
