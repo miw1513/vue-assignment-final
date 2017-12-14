@@ -67,14 +67,16 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'dataQuestion'
+      'dataQuestion',
+      'CurrentMatch'
     ])
   },
   methods: {
     ...mapActions([
       'setting',
       'saveData',
-      'setting'
+      'setting',
+      'checkMatch'
     ]),
     // copy () {
     //   var ref = firebase.database().ref('draw/match')
@@ -143,6 +145,9 @@ export default {
       }
     }
       // this.copy()
+  },
+  created () {
+    this.checkMatch()
   },
   mounted () {
     this.c = document.getElementById('myCanvas')

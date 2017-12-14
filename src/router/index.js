@@ -5,6 +5,7 @@ import login from '@/components/login'
 import draw from '@/components/draw'
 import hello from '@/components/HelloWorld'
 import lobby from '@/components/lobby'
+import scoreboard from '@/components/scoreboard'
 
 Vue.use(Router)
 
@@ -29,6 +30,11 @@ export default new Router({
       path: '/lobby',
       name: 'lobby',
       component: lobby
+    },
+    {
+      path: '/scoreboard',
+      name: 'scoreboard',
+      component: scoreboard
     }
 
   ]
