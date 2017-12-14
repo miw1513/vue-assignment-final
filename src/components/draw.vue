@@ -4,11 +4,19 @@
     <br><br>
     <hr>
 
-    <canvas id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
+    
     <!-- <canvas id="myCanvas2" width="500" height="500"></canvas> -->
-    <div v-for="resul in result">
+    <div class="columns">
+      <div class="column">
+        <canvas id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
+      </div>
+      <div class="column is-one-fifth">
+      <p v-for="resul in result">
       {{resul}}
+    </p>
     </div>
+    </div>
+
     <input type="text" v-model="resultQuestion"><button @click="checkResult(resultQuestion)">ส่งคำตอบ</button>
     
   </div>
