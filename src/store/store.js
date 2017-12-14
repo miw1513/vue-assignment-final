@@ -4,12 +4,12 @@ import firebase from 'firebase'
 import router from '../router/index'
 
 let config = {
-  apiKey: 'AIzaSyDdq92cBZ4Mv5VdbHGfVnE0q4ZlTctvIeg',
-  authDomain: 'vue-assignment.firebaseapp.com',
-  databaseURL: 'https://vue-assignment.firebaseio.com',
-  projectId: 'vue-assignment',
-  storageBucket: 'vue-assignment.appspot.com',
-  messagingSenderId: '812344967443'
+  apiKey: 'AIzaSyDLfM_hgjwzB9VAuso7gIkYnPq4OuCfAJE',
+  authDomain: 'drawsomething-21394.firebaseapp.com',
+  databaseURL: 'https://drawsomething-21394.firebaseio.com',
+  projectId: 'drawsomething-21394',
+  storageBucket: 'drawsomething-21394.appspot.com',
+  messagingSenderId: '948399402337'
 }
 var firebaseApp = firebase.initializeApp(config)
 let provider = new firebase.auth.FacebookAuthProvider()
@@ -23,12 +23,19 @@ export const store = new Vuex.Store({
   state: {
     user: {},
     isReady: false,
-    dataQuestion: []
+    dataQuestion: [],
+    keyPlayer: '',
+    Partys: '',
+    userCreate: [],
+    CurrentMatch: ''
   },
   getters: {
     user: state => state.user,
     isReady: state => state.isReady,
-    dataQuestion: state => state.dataQuestion
+    dataQuestion: state => state.dataQuestion,
+    keyPlayer: state => state.keyPlayer,
+    Partys: state => state.Partys,
+    userCreate: state => state.userCreate
   },
   mutations: {
     setReady (state) {
@@ -39,18 +46,27 @@ export const store = new Vuex.Store({
     },
     setQuestion (state, data) {
       state.dataQuestion = data
+    },
+    setKeyplayer (state, data) {
+      state.keyPlayer = data
+    },
+    setPartys (state, data) {
+      state.Partys = data
+    },
+    setUserCreate (state, data) {
+      state.userCreate = data
     }
   },
   actions: {
     init ({ commit, dispatch, bindFirebaseRef }) {
       firebase.auth().onAuthStateChanged((user) => {
         if (user && user.uid) {
-          let { displayName, uid } = user
           let profile = {
-            displayName,
-            uid,
+            name: user.displayName,
+            picture: user.photoURL,
             fb: user.providerData[0]
           }
+          commit('setKeyplayer', user.uid)
           commit('setUser', profile)
           router.push('/lobby')
         } else {
@@ -60,13 +76,26 @@ export const store = new Vuex.Store({
         }
       })
     },
-    login () {
-      let provider = new firebase.auth.FacebookAuthProvider()
-      firebase.auth().signInWithRedirect(provider)
-      router.push('/hello')
+    login (context) {
+      var vm = this
+      firebase.auth().signInWithPopup(provider).then(function (result) {
+        var user = result.user
+        vm.displayName = user.displayName
+        vm.photoURL = user.photoURL
+        var tmp = {
+          name: user.displayName,
+          picture: user.photoURL,
+          fb: user.providerData[0]
+        }
+        db.ref('players').child(user.uid).set(tmp)
+        context.commit('setKeyplayer', user.uid)
+        context.commit('setUser', tmp)
+        router.push('/lobby')
+      }).catch(function (error) {
+        console.log(error)
+      })
     },
     logout () {
-      console.log('asdsad')
       firebase.auth().signOut()
     },
     setting (context) {
@@ -83,6 +112,26 @@ export const store = new Vuex.Store({
     },
     saveData (context, picture) {
       db.ref('draw/match').push(picture)
+    },
+    createparty (context, Object) {
+      db.ref('partys').push(Object)
+    },
+    loadpartys (context) {
+      var ref = db.ref('partys')
+      ref.on('value', (snapshot) => {
+        context.commit('setPartys', snapshot.val())
+        const playerCreateData = snapshot.val()
+        var playerCreateOnce = []
+        Object.keys(playerCreateData).map((key, index) => {
+          db.ref('players/' + playerCreateData[key].idhost).on('value', (snapshot) => {
+            playerCreateOnce.push(snapshot.val())
+          })
+        })
+        context.commit('setUserCreate', playerCreateOnce)
+      })
+    },
+    joinRoom (context) {
+
     }
   }
 })
