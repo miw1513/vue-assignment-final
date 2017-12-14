@@ -79,8 +79,7 @@ export default {
     },
     checkResult (result) {
       if (this.dataQuestion[this.countQuestion] === result) {
-        //push คะแนนเข้า firebase ตาม user ที่ได้คะแนน
-        //push ลำดับคำถามเข้า firebase
+        console.log('push คะแนนเข้า firebase ตาม user ที่ได้คะแนนpush ลำดับคำถามเข้า firebase')
         this.countQuestion++
         this.showResult = 'คำตอบถูกต้อง'
       } else {
