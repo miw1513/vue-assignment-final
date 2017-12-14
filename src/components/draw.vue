@@ -6,8 +6,8 @@
 
     <canvas id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
     <!-- <canvas id="myCanvas2" width="500" height="500"></canvas> -->
-    <div>
-      {{result}}
+    <div v-for="resul in result">
+      {{resul}}
     </div>
     <input type="text" v-model="resultQuestion"><button @click="checkResult(resultQuestion)">ส่งคำตอบ</button>
     
@@ -41,7 +41,7 @@ export default {
       resultQuestion: '',
       showResult: '',
       countQuestion: 0,
-      result: ''
+      result: ['']
     }
   },
   computed: {
@@ -84,7 +84,8 @@ export default {
     },
     checkResult (result) {
       console.log(result)
-      this.result += this.resultQuestion
+      this.result.push(this.resultQuestion)
+      // this.result += this.resultQuestion + '<br />'
       if (this.dataQuestion[this.countQuestion] === result) {
         console.log('push คะแนนเข้า firebase ตาม user ที่ได้คะแนนpush ลำดับคำถามเข้า firebase')
         this.countQuestion++
