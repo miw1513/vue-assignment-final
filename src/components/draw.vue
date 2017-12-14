@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{showResult}}</h1>
+    
     <br><br>
     <hr>
 
@@ -9,15 +9,19 @@
     <div class="columns">
       <div class="column">
         <canvas id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
+        <input type="text" v-model="resultQuestion"><button @click="checkResult(resultQuestion)">ส่งคำตอบ</button>
       </div>
       <div class="column is-one-fifth">
       <p v-for="resul in result">
       {{resul}}
     </p>
     </div>
+    <div class="column is-one-quarter">
+    <P v-for="(show,index) in showResult">
+      {{showResult[index]}}
+    </P>
+  </div>
     </div>
-
-    <input type="text" v-model="resultQuestion"><button @click="checkResult(resultQuestion)">ส่งคำตอบ</button>
     
   </div>
 </template>
@@ -36,7 +40,7 @@ export default {
       c: {},
       c2: {},
       resultQuestion: '',
-      showResult: '',
+      showResult: [],
       countQuestion: 0,
       result: ['']
     }
@@ -113,9 +117,9 @@ export default {
       if (this.dataQuestion[this.countQuestion] === result) {
         console.log('push คะแนนเข้า firebase ตาม user ที่ได้คะแนนpush ลำดับคำถามเข้า firebase')
         this.countQuestion++
-        this.showResult = 'คำตอบถูกต้อง'
+        this.showResult.push('คำตอบถูกต้อง')
       } else {
-        this.showResult = 'คำตอบไม่ถูกต้อง'
+        this.showResult.push('คำตอบไม่ถูกต้อง')
       }
     }
       // this.copy()
