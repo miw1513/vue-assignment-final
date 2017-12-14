@@ -1,7 +1,6 @@
 <template>
   <div class="hello">
     
-    <br><br>
 
     
     <!-- <canvas id="myCanvas2" width="500" height="500"></canvas> -->
@@ -158,5 +157,11 @@ export default {
 <style scoped>
 canvas {
   border: 2px solid #666;
+}
+scroll {
+    background-color: #00FFFF;
+    width: 400px;
+    height: 100px;
+    overflow: auto;
 }
 </style>
