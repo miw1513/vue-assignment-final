@@ -3,8 +3,10 @@
  
       <button class="button is-primary" @click="createroom () "> CREATE ROOM </button>
     <br>
-       <div v-for="party in Partys">
+       <div v-for="party in Partys">        
       {{party.idhost}}
+      <button class="button is-primary" > JOIN </button>
+      <br><br>
     </div>
   </div>    
 </template>
