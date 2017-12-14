@@ -11,11 +11,11 @@
              <th>จำนวนคน</th>
              <th></th>
            </tr>
-           <tr v-for="user in userCreate">
+           <tr v-for="(user, index) in userCreate">
              <td><img :src="user.fb.photoURL" alt=""></td>
              <td><h1>{{user.fb.displayName}}</h1></td>
              <td>0/5</td>
-             <td><button class="button is-link" @click="joinRoom()">เข้าร่วมห้อง</button></td>
+             <td><button class="button is-link" @click="joinRoomLobby(Partys[index].idhost)">เข้าร่วมห้อง</button></td>
            </tr>
          </table>
       </div>
@@ -38,7 +38,8 @@ export default {
       'setting',
       'createparty',
       'init',
-      'loadpartys'
+      'loadpartys',
+      'joinRoom'
     ]),
     createroom () {
       var obj = {
@@ -49,6 +50,9 @@ export default {
         idplayer4: ''
       }
       this.createparty(obj)
+    },
+    joinRoomLobby (matchID) {
+      this.joinRoom(matchID)
     }
   },
   computed: {

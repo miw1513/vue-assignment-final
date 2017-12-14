@@ -55,6 +55,9 @@ export const store = new Vuex.Store({
     },
     setUserCreate (state, data) {
       state.userCreate = data
+    },
+    setJoinMatch (state, data) {
+      state.CurrentMatch = data
     }
   },
   actions: {
@@ -118,8 +121,14 @@ export const store = new Vuex.Store({
     },
     loadpartys (context) {
       var ref = db.ref('partys')
+      var partyallData = {}
+      var partyallmatch = []
       ref.on('value', (snapshot) => {
-        context.commit('setPartys', snapshot.val())
+        partyallData = snapshot.val()
+        Object.keys(partyallData).map((key, index) => {
+          partyallmatch.push(partyallData[key])
+        })
+        context.commit('setPartys', partyallmatch)
         const playerCreateData = snapshot.val()
         var playerCreateOnce = []
         Object.keys(playerCreateData).map((key, index) => {
@@ -130,8 +139,9 @@ export const store = new Vuex.Store({
         context.commit('setUserCreate', playerCreateOnce)
       })
     },
-    joinRoom (context) {
-
+    joinRoom (context, idhost) {
+      context.commit('setJoinMatch', idhost)
+      router.push('/draw')
     }
   }
 })
