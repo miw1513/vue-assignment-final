@@ -25,14 +25,17 @@ export const store = new Vuex.Store({
     isReady: false,
     dataQuestion: [],
     keyPlayer: '',
-    Partys: ''
+    Partys: '',
+    userCreate: [],
+    CurrentMatch: ''
   },
   getters: {
     user: state => state.user,
     isReady: state => state.isReady,
     dataQuestion: state => state.dataQuestion,
     keyPlayer: state => state.keyPlayer,
-    Partys: state => state.Partys
+    Partys: state => state.Partys,
+    userCreate: state => state.userCreate
   },
   mutations: {
     setReady (state) {
@@ -49,6 +52,9 @@ export const store = new Vuex.Store({
     },
     setPartys (state, data) {
       state.Partys = data
+    },
+    setUserCreate (state, data) {
+      state.userCreate = data
     }
   },
   actions: {
@@ -84,14 +90,12 @@ export const store = new Vuex.Store({
         db.ref('players').child(user.uid).set(tmp)
         context.commit('setKeyplayer', user.uid)
         context.commit('setUser', tmp)
-        console.log(context.state.keyPlayer)
         router.push('/lobby')
       }).catch(function (error) {
         console.log(error)
       })
     },
     logout () {
-      console.log('asdsad')
       firebase.auth().signOut()
     },
     setting (context) {
@@ -116,7 +120,18 @@ export const store = new Vuex.Store({
       var ref = db.ref('partys')
       ref.on('value', (snapshot) => {
         context.commit('setPartys', snapshot.val())
+        const playerCreateData = snapshot.val()
+        var playerCreateOnce = []
+        Object.keys(playerCreateData).map((key, index) => {
+          db.ref('players/' + playerCreateData[key].idhost).on('value', (snapshot) => {
+            playerCreateOnce.push(snapshot.val())
+          })
+        })
+        context.commit('setUserCreate', playerCreateOnce)
       })
+    },
+    joinRoom (context) {
+
     }
   }
 })

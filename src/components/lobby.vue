@@ -1,11 +1,25 @@
 <template>
   <div class="hello">
- 
+    <div class="container">
       <button class="button is-primary" @click="createroom () "> CREATE ROOM </button>
     <br>
-       <div v-for="party in Partys">
-      {{party.idhost}}
-    </div>
+      
+         <table class="table">
+           <tr>
+             <th></th>
+             <th>ชื่อ</th>
+             <th>จำนวนคน</th>
+             <th></th>
+           </tr>
+           <tr v-for="user in userCreate">
+             <td><img :src="user.fb.photoURL" alt=""></td>
+             <td><h1>{{user.fb.displayName}}</h1></td>
+             <td>0/5</td>
+             <td><button class="button is-link" @click="joinRoom()">เข้าร่วมห้อง</button></td>
+           </tr>
+         </table>
+      </div>
+    
   </div>    
 </template>
 
@@ -40,7 +54,8 @@ export default {
   computed: {
     ...mapGetters([
       'keyPlayer',
-      'Partys'
+      'Partys',
+      'userCreate'
     ])
   },
   created () {
