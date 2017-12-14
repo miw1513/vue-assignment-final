@@ -52,7 +52,7 @@ export const store = new Vuex.Store({
             fb: user.providerData[0]
           }
           commit('setUser', profile)
-          router.push('/hello')
+          router.push('/lobby')
         } else {
           commit('setUser', null)
           router.push('/login')
@@ -61,11 +61,12 @@ export const store = new Vuex.Store({
       })
     },
     login () {
-      console.log('asd')
       let provider = new firebase.auth.FacebookAuthProvider()
       firebase.auth().signInWithRedirect(provider)
+      router.push('/hello')
     },
     logout () {
+      console.log('asdsad')
       firebase.auth().signOut()
     },
     setting (context) {
