@@ -1,8 +1,17 @@
 <template>
-  <div class="hello">
-    
-    
-  </div>
+<div class=HelloWorld>
+<center>
+<table border="5"  width="70%" height="50%" >
+                    <tr><td height="50"><center>Room</center></td></tr>
+                    <tr><td height="400"></td></tr>
+</table>
+<table border="5"  width="70%" height="50%" >
+                    <tr><td height="50"><center>join</center></td></tr>
+                    
+</table>
+</center>
+</div>
+
 </template>
 
 <script>
@@ -15,7 +24,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1, h2 {
   font-weight: normal;
