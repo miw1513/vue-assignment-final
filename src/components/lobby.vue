@@ -11,11 +11,12 @@
              <th>จำนวนคน</th>
              <th></th>
            </tr>
-           <tr v-for="(user, index) in userCreate">
-             <td><img :src="user.fb.photoURL" alt=""></td>
-             <td><h1>{{user.fb.displayName}}</h1></td>
+           <tr v-for="(Party, key, index) in Partys">
+             <td>{{key}}</td>
+             <!-- <td><img :src="userCreate[index].fb.photoURL" alt=""></td>
+             <td><h1>{{userCreate[index].fb.displayName}}</h1></td> -->
              <td>0/5</td>
-             <td><button class="button is-link" @click="joinRoomLobby(Partys[index].idhost)">เข้าร่วมห้อง</button></td>
+             <td><button class="button is-link" @click="joinRoomLobby(key)">เข้าร่วมห้อง</button></td>
            </tr>
          </table>
       </div>
@@ -58,8 +59,8 @@ export default {
   computed: {
     ...mapGetters([
       'keyPlayer',
-      'Partys',
-      'userCreate'
+      'userCreate',
+      'Partys'
     ])
   },
   created () {

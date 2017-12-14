@@ -27,7 +27,8 @@ export const store = new Vuex.Store({
     keyPlayer: '',
     Partys: '',
     userCreate: [],
-    CurrentMatch: ''
+    CurrentMatch: '',
+    statusDraw: '0'
   },
   getters: {
     user: state => state.user,
@@ -35,7 +36,8 @@ export const store = new Vuex.Store({
     dataQuestion: state => state.dataQuestion,
     keyPlayer: state => state.keyPlayer,
     Partys: state => state.Partys,
-    userCreate: state => state.userCreate
+    userCreate: state => state.userCreate,
+    statusDraw: state => state.statusDraw
   },
   mutations: {
     setReady (state) {
@@ -58,6 +60,9 @@ export const store = new Vuex.Store({
     },
     setJoinMatch (state, data) {
       state.CurrentMatch = data
+    },
+    setstatusDraw (state, data) {
+      state.statusDraw = data
     }
   },
   actions: {
@@ -114,21 +119,19 @@ export const store = new Vuex.Store({
       context.commit('setQuestion', dataQ)
     },
     saveData (context, picture) {
-      db.ref('draw/match').push(picture)
+      db.ref('partys').child(context.state.CurrentMatch + '/draw').push(picture)
     },
     createparty (context, Object) {
-      db.ref('partys').push(Object)
+      var key = db.ref('partys').push(Object).getKey()
+      context.commit('setJoinMatch', key)
+      context.commit('setstatusDraw', '1')
+      // db.ref('currentMatch/' + context.state.keyPlayer).set(key)
+      // console.log(snapshot.ref.key) ดึง key
     },
     loadpartys (context) {
       var ref = db.ref('partys')
-      var partyallData = {}
-      var partyallmatch = []
       ref.on('value', (snapshot) => {
-        partyallData = snapshot.val()
-        Object.keys(partyallData).map((key, index) => {
-          partyallmatch.push(partyallData[key])
-        })
-        context.commit('setPartys', partyallmatch)
+        context.commit('setPartys', snapshot.val())
         const playerCreateData = snapshot.val()
         var playerCreateOnce = []
         Object.keys(playerCreateData).map((key, index) => {
@@ -137,7 +140,6 @@ export const store = new Vuex.Store({
           })
         })
         context.commit('setUserCreate', playerCreateOnce)
-        context.commit('setJoinMatch', '')
       })
     },
     joinRoom (context, idhost) {
