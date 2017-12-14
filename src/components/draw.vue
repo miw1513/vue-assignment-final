@@ -9,6 +9,7 @@
         <canvas id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
         <input type="text" class="" placeholder="" v-model="resultQuestion"><button @click="checkResult(resultQuestion)" class="button is-primary is-outlined">ส่งคำตอบ</button>
       </div>
+      <div class="myBox">
       <table class="table">
         <tr>
           <td><p v-for="resul in result">
@@ -20,7 +21,7 @@
           </td>
         </tr>
       </table>
-      <table >
+      <table>
         <tr>
           <td >
         </td>
@@ -32,6 +33,7 @@
           </td>
         </tr>
       </table>
+      </div>
       <div class="column is-one-fifth">
         
       </div>
@@ -163,5 +165,38 @@ scroll {
     width: 400px;
     height: 100px;
     overflow: auto;
+}
+body {
+margin-bottom: 200%;
+}
+
+/* Box styles */
+.myBox {
+border: none;
+padding: 5px;
+font: 24px/36px sans-serif;
+width: 200px;
+height: 200px;
+overflow: scroll;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+width: 12px;
+height: 12px;
+}
+
+::-webkit-scrollbar-track {
+background: #f5f5f5;
+border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+border-radius: 10px;
+background: #ccc;  
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: #999;  
 }
 </style>
