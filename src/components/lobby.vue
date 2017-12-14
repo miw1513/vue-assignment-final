@@ -1,9 +1,10 @@
 <template>
   <div class="hello">
     
+    
   </div>
 </template>
-Q
+
 <script>
 export default {
   name: 'HelloWorld',
