@@ -1,6 +1,6 @@
 <template>
 <<<<<<< HEAD
-<div class=HelloWorld>
+<div class=HelloWorl>
 <center>
 <table border="5"  width="70%" height="50%" >
                     <tr><td height="50"><center>Room</center></td></tr>
