@@ -3,7 +3,7 @@
     <h1>{{showResult}}</h1>
     <br><br>
     <hr>
-    
+
     <canvas id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
     <canvas id="myCanvas2" width="500" height="500"></canvas>
     <input type="text" v-model="resultQuestion"><button @click="checkResult(resultQuestion)">ส่งคำตอบ</button>
@@ -112,7 +112,7 @@ export default {
       })
     }
     )
-    console.log(this.dataQuestion)
+    console.log(this.dataQuestion + "ss")
   }
 }
 </script>
