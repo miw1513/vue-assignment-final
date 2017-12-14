@@ -25,14 +25,19 @@ export const store = new Vuex.Store({
     isReady: false,
     dataQuestion: [],
     keyPlayer: '',
-    Partys: ''
+    Partys: '',
+    userCreate: [],
+    CurrentMatch: '',
+    statusDraw: '0'
   },
   getters: {
     user: state => state.user,
     isReady: state => state.isReady,
     dataQuestion: state => state.dataQuestion,
     keyPlayer: state => state.keyPlayer,
-    Partys: state => state.Partys
+    Partys: state => state.Partys,
+    userCreate: state => state.userCreate,
+    statusDraw: state => state.statusDraw
   },
   mutations: {
     setReady (state) {
@@ -49,6 +54,15 @@ export const store = new Vuex.Store({
     },
     setPartys (state, data) {
       state.Partys = data
+    },
+    setUserCreate (state, data) {
+      state.userCreate = data
+    },
+    setJoinMatch (state, data) {
+      state.CurrentMatch = data
+    },
+    setstatusDraw (state, data) {
+      state.statusDraw = data
     }
   },
   actions: {
@@ -84,14 +98,12 @@ export const store = new Vuex.Store({
         db.ref('players').child(user.uid).set(tmp)
         context.commit('setKeyplayer', user.uid)
         context.commit('setUser', tmp)
-        console.log(context.state.keyPlayer)
         router.push('/lobby')
       }).catch(function (error) {
         console.log(error)
       })
     },
     logout () {
-      console.log('asdsad')
       firebase.auth().signOut()
     },
     setting (context) {
@@ -107,16 +119,37 @@ export const store = new Vuex.Store({
       context.commit('setQuestion', dataQ)
     },
     saveData (context, picture) {
-      db.ref('draw/match').push(picture)
+      db.ref('partys').child(context.state.CurrentMatch + '/draw').push(picture)
     },
     createparty (context, Object) {
-      db.ref('partys').push(Object)
+      var key = db.ref('partys').push(Object).getKey()
+      context.commit('setJoinMatch', key)
+      context.commit('setstatusDraw', '1')
+      // db.ref('currentMatch/' + context.state.keyPlayer).set(key)
+      // console.log(snapshot.ref.key) ดึง key
     },
     loadpartys (context) {
       var ref = db.ref('partys')
       ref.on('value', (snapshot) => {
         context.commit('setPartys', snapshot.val())
+        const playerCreateData = snapshot.val()
+        var playerCreateOnce = []
+        Object.keys(playerCreateData).map((key, index) => {
+          db.ref('players/' + playerCreateData[key].idhost).on('value', (snapshot) => {
+            playerCreateOnce.push(snapshot.val())
+          })
+        })
+        context.commit('setUserCreate', playerCreateOnce)
       })
+    },
+    joinRoom (context, idhost) {
+      context.commit('setJoinMatch', idhost)
+      router.push('/draw')
+    },
+    checkMatch (context) {
+      if (context.state.CurrentMatch === '') {
+        router.push('/lobby')
+      }
     }
   }
 })
