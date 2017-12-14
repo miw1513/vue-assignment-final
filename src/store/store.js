@@ -4,29 +4,31 @@ import firebase from 'firebase'
 import router from '../router/index'
 
 let config = {
-  apiKey: 'AIzaSyBc4GvjjmZMezOuv2fc8FOUiPcyttLPmuw',
-  authDomain: 'battleship-d7f88.firebaseapp.com',
-  databaseURL: 'https://battleship-d7f88.firebaseio.com',
-  projectId: 'battleship-d7f88',
-  storageBucket: '',
-  messagingSenderId: '211714676183'
+  apiKey: 'AIzaSyDdq92cBZ4Mv5VdbHGfVnE0q4ZlTctvIeg',
+  authDomain: 'vue-assignment.firebaseapp.com',
+  databaseURL: 'https://vue-assignment.firebaseio.com',
+  projectId: 'vue-assignment',
+  storageBucket: 'vue-assignment.appspot.com',
+  messagingSenderId: '812344967443'
 }
-firebase.initializeApp(config)
+var firebaseApp = firebase.initializeApp(config)
 let provider = new firebase.auth.FacebookAuthProvider()
 provider.addScope('public_profile')
 provider.setCustomParameters({
   'display': 'popup'
 })
-// var db = firebaseApp.database()
+var db = firebaseApp.database()
 Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     user: {},
-    isReady: false
+    isReady: false,
+    dataQuestion: []
   },
   getters: {
     user: state => state.user,
-    isReady: state => state.isReady
+    isReady: state => state.isReady,
+    dataQuestion: state => state.dataQuestion
   },
   mutations: {
     setReady (state) {
@@ -34,6 +36,9 @@ export const store = new Vuex.Store({
     },
     setUser (state, user) {
       state.user = user
+    },
+    setQuestion (state, data) {
+      state.dataQuestion = data
     }
   },
   actions: {
@@ -47,7 +52,7 @@ export const store = new Vuex.Store({
             fb: user.providerData[0]
           }
           commit('setUser', profile)
-          router.push('/draw')
+          router.push('/hello')
         } else {
           commit('setUser', null)
           router.push('/login')
@@ -62,6 +67,21 @@ export const store = new Vuex.Store({
     },
     logout () {
       firebase.auth().signOut()
+    },
+    setting (context) {
+      var dataQ = []
+      var ref = db.ref('question')
+      ref.once('value').then(snapshot => {
+        const questionData = snapshot.val()
+        Object.keys(questionData).map((key, index) => {
+          dataQ.push(questionData[key])
+        })
+      }
+      )
+      context.commit('setQuestion', dataQ)
+    },
+    saveData (context, picture) {
+      db.ref('draw/match').push(picture)
     }
   }
 })

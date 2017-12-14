@@ -23,17 +23,7 @@
 </template>
 
 <script>
-import firebase from 'firebase'
-let config = {
-  apiKey: 'AIzaSyDdq92cBZ4Mv5VdbHGfVnE0q4ZlTctvIeg',
-  authDomain: 'vue-assignment.firebaseapp.com',
-  databaseURL: 'https://vue-assignment.firebaseio.com',
-  projectId: 'vue-assignment',
-  storageBucket: 'vue-assignment.appspot.com',
-  messagingSenderId: '812344967443'
-}
-firebase.initializeApp(config)
-const db = firebase.database()
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'HelloWorld',
   data () {
@@ -45,7 +35,6 @@ export default {
       data: [],
       c: {},
       c2: {},
-      dataQuestion: [],
       resultQuestion: '',
       showResult: '',
       countQuestion: 0,
@@ -53,8 +42,16 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      'dataQuestion'
+    ])
   },
   methods: {
+    ...mapActions([
+      'setting',
+      'saveData',
+      'setting'
+    ]),
     // copy () {
     //   var ref = firebase.database().ref('draw/match')
     //   ref.once('value').then(snapshot => {
@@ -76,7 +73,13 @@ export default {
     // },
     startDraw (event) {
       this.ctx.moveTo(event.offsetX, event.offsetY)
-      this.saveData('moveTo', event.offsetX, event.offsetY)
+      var picture = {}
+      picture = {
+        type: 'moveTo',
+        x: event.offsetX,
+        y: event.offsetY
+      }
+      this.saveData(picture)
       this.drawing = true
     },
     stopDraw () {
@@ -86,8 +89,21 @@ export default {
       if (this.drawing) {
         this.ctx.lineTo(event.offsetX, event.offsetY)
         this.ctx.stroke()
-        this.saveData('lineTo', event.offsetX, event.offsetY)
-        this.saveData('stroke', 0, 0)
+        var picture = {}
+        picture = {
+          type: 'lineTo',
+          x: event.offsetX,
+          y: event.offsetY
+        }
+        this.saveData(picture)
+        picture = {
+          type: 'stroke',
+          x: event.offsetX,
+          y: event.offsetY
+        }
+        this.saveData(picture)
+        // this.saveData('lineTo', event.offsetX, event.offsetY)
+        // this.saveData('stroke', 0, 0)
       }
     },
     checkResult (result) {
@@ -101,16 +117,8 @@ export default {
       } else {
         this.showResult = 'คำตอบไม่ถูกต้อง'
       }
-    },
-    saveData (type, x, y) {
-      this.picture.push({
-        type,
-        x,
-        y
-      })
-      db.ref('draw/match').set(this.picture)
-      // this.copy()
     }
+      // this.copy()
   },
   mounted () {
     this.c = document.getElementById('myCanvas')
@@ -119,15 +127,7 @@ export default {
     // this.c2 = document.getElementById('myCanvas2')
     // this.ctx2 = this.c2.getContext('2d')
     // this.ctx2.lineWidth = 5
-    var ref = firebase.database().ref('question')
-    ref.once('value').then(snapshot => {
-      const questionData = snapshot.val()
-      Object.keys(questionData).map((key, index) => {
-        this.dataQuestion.push(questionData[key])
-      })
-    }
-    )
-    console.log(this.dataQuestion)
+    this.setting()
   }
 }
 </script>
