@@ -1,6 +1,9 @@
 <template>
   <div class="hello">
     
+
+    
+  
     <div class="columns is-gapless">
       <div class="column">
 
@@ -34,8 +37,16 @@
         </tr>
       </table>
       </div>
+      <div class="column is-one-fifth">
+        
+      </div>
+      <div class="column is-half">
+          <div class="column is-one-quarter">
+              
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -175,8 +186,8 @@ margin-bottom: 200%;
 border: none;
 padding: 5px;
 font: 24px/36px sans-serif;
-width: 500px;
-height: 500px;
+width: 200px;
+height: 200px;
 overflow: scroll;
 }
 
