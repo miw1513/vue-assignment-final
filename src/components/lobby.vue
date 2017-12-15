@@ -1,25 +1,18 @@
 <template>
   <div class="hello">
-    <div class="container">
+    
     <div class="column" style="background-color:Orange;">
-      <img src="<a href="target="_blank"<img border="0" src="http://image.free.in.th/v/2013/ie/171125123203.png" alt="images by free.in.th" width="450px" height="450px"/>
+      <div class="container">
+      <center><img src="<a href="target="_blank"<img border="0" src="http://image.free.in.th/v/2013/ie/171125123203.png" alt="images by free.in.th" width="450px" height="450px"/></center>
       <div class="columns">
         <div class="column is-two-fifths"></div>
-        <div class="column is-two-fifths"><button class="button is-large" @click="createroom () "> CREATE ROOM </button></div>
-      </div>
-      <div class="columns">
-        <div class="column is-two-fifths"></div>
-        <div class="column is-two-fifths"></div>
-        <div class="column is-two-fifths"></div>
+        <center><div class="column is-two-fifths"><button class="button is-large" @click="createroom () "> CREATE ROOM </button></div></center>
       </div>
       <div class="columns">
         <div class="column is-two-fifths"></div>
       </div>
-      <div class="columns">
-        <div class="column is-two-fifths"></div>
-        <div class="column is-two-fifths"></div>
-      </div>   
-  <table class="table">
+<center>
+<table class="table">
   <thead>
     <tr>
       <th><abbr title="Position">No</abbr></th>
@@ -34,20 +27,11 @@
       <th><abbr><button class="button is-info" @click="joinRoomLobby(key)"> JOIN </button></abbr></th>
     </tr>
   </tfoot>
-  <tbody>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr class="is-selected">
-    </tr>
-  </tbody>
 </table>
+</center>
     </div>
-    </div>
-    </div>
+  </div>
+</div>
 </template>
 
 <script>
