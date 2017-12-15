@@ -32,7 +32,7 @@
   </thead>
   <tfoot>
     <tr v-for="(party, key, index) in Partys">
-      <th><abbr title="Position">No</abbr></th>
+      <th><abbr>{{++index}}</abbr></th>
       <th></th>
       <th><abbr><button class="button is-info" @click="joinRoomLobby(key)"> JOIN </button></abbr></th>
     </tr>
@@ -41,7 +41,7 @@
 </center>
     </div>
   </div>
-  </section>
+    </section>
 </div>
 </template>
 
