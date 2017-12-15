@@ -20,7 +20,7 @@
       DRAWSOMETHING      
     </p>
     <p class="title">   
-      TOP 5 HIGH SCORE
+       HIGH SCORE
     </p>
     <div class="columns" v-for="(user,index,n) in scoreboard">
         <div class="column">
@@ -28,7 +28,7 @@
         <div class="column">
           <hr>
           <p class="heading">Rank</p>
-          <p class="title">{{ n+1 }} </p>
+          <p class="title">{{ index+1 }} </p>
           <p class="header" id="name">
             <img :src= "user.picture" >
           <!-- <img src: ="user.picture"> -->
