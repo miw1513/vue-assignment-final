@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
-    
-    <div class="column" style="background-color:Orange;">
+    <section class="hero is-warning is-medium">
+    <div class="column">
       <div class="tabs is-right">
         <ul>
           <li>
@@ -32,7 +32,7 @@
   </thead>
   <tfoot>
     <tr v-for="(party, key, index) in Partys">
-      <th><abbr title="Position">No</abbr></th>
+      <th><abbr>{{++index}}</abbr></th>
       <th></th>
       <th><abbr><button class="button is-info" @click="joinRoomLobby(key)"> JOIN </button></abbr></th>
     </tr>
@@ -41,6 +41,7 @@
 </center>
     </div>
   </div>
+    </section>
 </div>
 </template>
 
