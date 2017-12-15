@@ -1,8 +1,10 @@
 <template>
   <div class="hello" >
   <button class="button is-primary" @click="backPage()">ย้อนหลัง</button>    
-
-    ข้อที่ {{ countQuestion + 1 }}    
+    <div v-if="statusDraw === '1'">
+      วาดรูป {{ dataQuestion[countQuestion] }}   
+    </div>
+     
 
     <div class="columns is-gapless">
       <div v-if="statusDraw === '1'" class="column">
