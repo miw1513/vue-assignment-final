@@ -241,6 +241,7 @@ export const store = new Vuex.Store({
       })
     },
     saveScore (context) {
+      
     },
     backPage (context) {
       if (context.state.statusDraw === '1') {

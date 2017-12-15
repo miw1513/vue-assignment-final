@@ -9,11 +9,11 @@
       <table class="table">
         <tr v-for="(resul,index) in result">
           <td>
-          {{resul}}
-        </td>
-        <td></td>
+           {{resul}}
+          </td>
+          <td></td>
           <td>
-             {{ showResult }}
+            {{ showResult[index] }}
           </td>
         </tr>
         </table>
@@ -23,18 +23,16 @@
 <section class="hero is-warning is-medium">
     <div class="columns is-mobile">
   <div class="column is-half is-offset-one-quarter">
-    
-    
   </div>
 </div>
 <div class="columns is-mobile">
   <div class="column is-half is-offset-one-quarter"> 
+    <br>
   <input  type="text" class="input is-rounded"  v-model="resultQuestion">
+  <br><br>
   <button  @click="checkResult(resultQuestion)" class="button is-primary is-outlined">ส่งคำตอบ</button>
   <button class="button is-info is-outlined " @click="backPage()">ย้อนหลัง</button>  
-
-  
-
+  <br><br>
   </div> 
 </div>
 </section>
@@ -55,7 +53,7 @@ export default {
       c: {},
       c2: {},
       resultQuestion: '',
-      showResult: [],
+      showResult: [''],
       result: ['']
     }
   },
@@ -143,6 +141,7 @@ export default {
       } else {
         this.showResult.push('คำตอบไม่ถูกต้อง')
       }
+      console.log(this.showResult)
     }
   },
   mounted () {
