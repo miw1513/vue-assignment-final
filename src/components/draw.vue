@@ -140,6 +140,7 @@ export default {
       // this.result += this.resultQuestion + '<br />'
       if (this.dataQuestion[this.countQuestion] === result) {
         this.nextQuestion()
+        this.saveScore()
         this.showResult.push('คำตอบถูกต้อง')
       } else {
         this.showResult.push('คำตอบไม่ถูกต้อง')

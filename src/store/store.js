@@ -108,7 +108,8 @@ export const store = new Vuex.Store({
         var tmp = {
           name: user.displayName,
           picture: user.photoURL,
-          fb: user.providerData[0]
+          fb: user.providerData[0],
+          score: 0
         }
         db.ref('players').child(user.uid).set(tmp)
         context.commit('setKeyplayer', user.uid)
@@ -165,6 +166,15 @@ export const store = new Vuex.Store({
     },
     joinRoom (context, idhost) {
       context.commit('setJoinMatch', idhost)
+      for (var z = 1; z <= 4; z++) {
+        console.log(z)
+        db.ref('partys/' + context.state.CurrentMatch + '/idplayer' + z).on('value', (snapshot) => {
+          if (snapshot.val() === '') {
+            db.ref('partys/').child(context.state.CurrentMatch + '/idplayer' + z).set(context.state.keyPlayer)
+            z = 5
+          }
+        })
+      }
       db.ref('players').child(context.state.keyPlayer + '/status').set('0')
       router.push('/draw')
     },
@@ -194,7 +204,7 @@ export const store = new Vuex.Store({
         DataScore = snapshot.val()
         Object.keys(DataScore).map((key, index) => {
           console.log(DataScore[key])
-            DataScoreAll.push(DataScore[key])
+          DataScoreAll.push(DataScore[key])
         })
         //   for (var i = 0; i < DataScoreAll.length; i++) {
         //     for (var u = 0; u < DataScoreAll.length; u++) {
@@ -205,6 +215,8 @@ export const store = new Vuex.Store({
         // }
         context.commit('setscoreboard', DataScoreAll)
       })
+    },
+    saveScore (context) {
     }
   }
 })
