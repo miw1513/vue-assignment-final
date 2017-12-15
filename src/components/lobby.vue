@@ -3,13 +3,6 @@
     <div class="container">
       <button class="button is-primary" @click="createroom () "> CREATE ROOM </button>
     <br>
-<<<<<<< HEAD
-       <div v-for="party in Partys">        
-      {{party.idhost}}
-      <button class="button is-primary" > JOIN </button>
-      <br><br>
-    </div>
-=======
       
          <table class="table">
            <tr>
@@ -28,7 +21,6 @@
          </table>
       </div>
     
->>>>>>> origin/master
   </div>    
 </template>
 
@@ -56,7 +48,8 @@ export default {
         idplayer1: '',
         idplayer2: '',
         idplayer3: '',
-        idplayer4: ''
+        idplayer4: '',
+        countQuestion: 0
       }
       this.createparty(obj)
     },
