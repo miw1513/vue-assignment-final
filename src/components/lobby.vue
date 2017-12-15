@@ -1,29 +1,5 @@
 <template>
   <div class="hello">
-<<<<<<< HEAD
-    <div class="container">
-      <button class="button is-primary" @click="createroom () "> CREATE ROOM </button>
-    <br>
-      
-         <table class="table">
-           <tr>
-             <th></th>
-             <th>ชื่อ</th>
-             <th>จำนวนคน</th>
-             <th></th>
-           </tr>
-           <tr v-for="(Party, key, index) in Partys">
-             <td>{{key}}</td>
-             <!-- <td><img :src="userCreate[index].fb.photoURL" alt=""></td>
-             <td><h1>{{userCreate[index].fb.displayName}}</h1></td> -->
-             <td>0/5</td>
-             <td><button class="button is-link" @click="joinRoomLobby(key)">เข้าร่วมห้อง</button></td>
-           </tr>
-         </table>
-      </div>
-    
-  </div>    
-=======
     <div class="column" style="background-color:Orange;">
       <center><img src="<a href="target="_blank"<img border="0" src="http://image.free.in.th/v/2013/ie/171125123203.png" alt="images by free.in.th" width="450px" height="450px"/></center>
       <div class="columns">
@@ -83,7 +59,6 @@
   </div> 
   </div> 
   </div>  
->>>>>>> eb067493442dd2c1ac7fb8f98df5b685eccd8ecd
 </template>
 
 <script>
