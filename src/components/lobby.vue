@@ -13,7 +13,7 @@
         </ul>
       </div>
       <div class="container">
-      <center><img src="<a href="target="_blank"<img border="0" src="http://image.free.in.th/v/2013/ie/171125123203.png" alt="images by free.in.th" width="450px" height="450px"/></center>
+      <center><img src="<a href="target="_blank"<img  src="http://image.free.in.th/v/2013/ie/171125123203.png" alt="" width="450px" height="450px"/></center>
       <div class="columns">
         <div class="column is-two-fifths"></div>
         <center><div class="column is-two-fifths"><button class="button is-dark" @click="createroom () "> CREATE ROOM </button></div></center>
@@ -33,7 +33,7 @@
   </thead>
   <tfoot>
     <tr v-for="(party, key, index) in Partys" >
-      <th v-if="party.countPlayer !== 4 "><abbr><img :src="userCreate[index].fb.photoURL" ></abbr></th>
+      <th v-if="party.countPlayer !== 4 "><abbr><img style="border-radius:180px;" :src="userCreate[index].fb.photoURL" ></abbr></th>
       <th v-if="party.countPlayer !== 4 "><abbr>{{ userCreate[index].fb.displayName }}</abbr></th>
       <th v-if="party.countPlayer !== 4 "><abbr><center>{{ party.countPlayer }}/4</center></abbr></th>
       <th v-if="party.countPlayer !== 4 "><abbr><button class="button is-info" @click="joinRoomLobby(key)"> JOIN </button></abbr></th>
