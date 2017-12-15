@@ -167,17 +167,20 @@ export const store = new Vuex.Store({
     joinRoom (context, idhost) {
       context.commit('setJoinMatch', idhost)
       for (var z = 1; z <= 4; z++) {
-        console.log(z)
         db.ref('partys/' + context.state.CurrentMatch + '/idplayer' + z).on('value', (snapshot) => {
           if (snapshot.val() === '') {
             db.ref('partys/').child(context.state.CurrentMatch + '/idplayer' + z).set(context.state.keyPlayer)
+            db.ref('players').child(context.state.keyPlayer + '/status').set('0')
+            db.ref('partys/' + context.state.CurrentMatch + '/countPlayer').once('value', (snapshot) => {
+              console.log(snapshot.val())
+              var countPlayers = snapshot.val() + 1
+              db.ref('partys/').child(context.state.CurrentMatch + '/countPlayer').set(countPlayers)
+            })
             z = 5
           }
         })
       }
-      db.ref('players').child(context.state.keyPlayer + '/status').set('0')
-      db.ref('partys/' + context.state.CurrentMatch + '/countPlayer').on('value', (snapshot) => {
-      })
+      
       router.push('/draw')
     },
     checkMatch (context) {
