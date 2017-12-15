@@ -180,7 +180,6 @@ export const store = new Vuex.Store({
           }
         })
       }
-      
       router.push('/draw')
     },
     checkMatch (context) {
@@ -208,9 +207,23 @@ export const store = new Vuex.Store({
       db.ref('players').on('value', (snapshot) => {
         DataScore = snapshot.val()
         Object.keys(DataScore).map((key, index) => {
-          console.log(DataScore[key])
           DataScoreAll.push(DataScore[key])
         })
+        var length = DataScoreAll.length
+        for (var i = 0; i < length - 1; i++) {
+          var min = i
+          for (var j = i + 1; j < length; j++) {
+            if (DataScoreAll[j].score > DataScoreAll[min].score) {
+              min = j
+            }
+          }
+          if (min !== i) {
+            var tmp = DataScoreAll[i]
+            DataScoreAll[i] = DataScoreAll[min]
+            DataScoreAll[min] = tmp
+          }
+        }
+        console.log(DataScoreAll)
         //   for (var i = 0; i < DataScoreAll.length; i++) {
         //     for (var u = 0; u < DataScoreAll.length; u++) {
         //     if (DataScoreAll[index] < DataScoreAll[i]) {

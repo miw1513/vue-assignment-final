@@ -1,10 +1,59 @@
 <template>
   <div class="hello" >
+<<<<<<< HEAD
+    <div class="columns">
+  <div class="column is-half">
+    <canvas id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
+  </div>
+  <div class="column">
+    <div class="myBox">
+      <table class="table">
+        <tr>
+          <td><p v-for="resul in result">
+          {{resul}}
+        </p>
+        </td>
+        <td></td>
+          <td>
+          </td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td >
+        </td>
+        <td></td>
+          <td><br>
+            <p v-for="(show,index) in showResult">
+                {{ showResult[index] }}
+              </p>
+            </td>
+          </tr>
+        </table>
+      </div>
+  </div>
+</div>
+    <div class="columns is-mobile">
+  <div class="column is-half is-offset-one-quarter">
+    
+    
+  </div>
+</div>
+<div class="columns is-mobile">
+  <div class="column is-half is-offset-one-quarter"> 
+  <input  type="text" class=""  v-model="resultQuestion">
+  <button  @click="checkResult(resultQuestion)" class="button is-primary is-outlined">ส่งคำตอบ</button>
+  <button class="button is-primary" @click="backPage()">ย้อนหลัง</button>  
+  </div> 
+</div>
+    ข้อที่ {{ countQuestion + 1 }}    
+=======
   <button class="button is-primary" @click="backPage()">ย้อนหลัง</button>    
     <div v-if="statusDraw === '1'">
       วาดรูป {{ dataQuestion[countQuestion] }}   
     </div>
      
+>>>>>>> b4db1a80274303d3fdafa6c1ca8b8efbbb9d45c9
 
     <div class="columns is-gapless">
       <div v-if="statusDraw === '1'" class="column">
@@ -183,9 +232,9 @@ margin-bottom: 200%;
 .myBox {
 border: none;
 padding: 5px;
-font: 24px/36px sans-serif;
-width: 200px;
-height: 200px;
+font: 16px/24px sans-serif;
+width: 300px;
+height: 500px;
 overflow: scroll;
 }
 
