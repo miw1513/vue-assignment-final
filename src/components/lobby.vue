@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
-    
-    <div class="column" style="background-color:Orange;">
+    <section class="hero is-warning is-medium">
+    <div class="column">
       <div class="tabs is-right">
         <ul>
           <li>
@@ -41,6 +41,7 @@
 </center>
     </div>
   </div>
+  </section>
 </div>
 </template>
 
