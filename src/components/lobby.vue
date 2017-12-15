@@ -6,7 +6,7 @@
       <center><img src="<a href="target="_blank"<img border="0" src="http://image.free.in.th/v/2013/ie/171125123203.png" alt="images by free.in.th" width="450px" height="450px"/></center>
       <div class="columns">
         <div class="column is-two-fifths"></div>
-        <center><div class="column is-two-fifths"><button class="button is-large" @click="createroom () "> CREATE ROOM </button></div></center>
+        <center><div class="column is-two-fifths"><button class="button is-info is-outlined" @click="createroom () "> CREATE ROOM </button></div></center>
       </div>
       <div class="columns">
         <div class="column is-two-fifths"></div>
