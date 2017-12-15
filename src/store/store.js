@@ -235,6 +235,18 @@ export const store = new Vuex.Store({
       })
     },
     saveScore (context) {
+    },
+    backPage (context,Object) {
+      if (context.state.statusDraw === '1') {
+        db.ref('partys').child(context.state.CurrentMatch).remove()
+        context.commit('setJoinMatch', '')
+        context.commit('setstatusDraw', '')
+      } else if (context.state.statusDraw === '0') {
+
+      }
+      
+
+
     }
   }
 })

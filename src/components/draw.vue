@@ -31,7 +31,10 @@
   <div class="column is-half is-offset-one-quarter"> 
   <input  type="text" class="input is-rounded"  v-model="resultQuestion">
   <button  @click="checkResult(resultQuestion)" class="button is-primary is-outlined">ส่งคำตอบ</button>
-  <button class="button is-primary" @click="backPage()">ย้อนหลัง</button>  
+  <button class="button is-info is-outlined " @click="backPage()">ย้อนหลัง</button>  
+
+  
+
   </div> 
 </div>
 </section>
