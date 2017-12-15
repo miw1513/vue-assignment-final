@@ -189,10 +189,23 @@ export const store = new Vuex.Store({
     },
     getscoreboard (context) {
       var DataScore = []
+      var DataScoreAll = []
+      var Count = 0
       db.ref('players').on('value', (snapshot) => {
         DataScore = snapshot.val()
+        Object.keys(DataScore).map((key, index) => {
+          if (Count === 0) {
+            Count++
+            DataScoreAll.push(DataScore[index])
+          }
+          for (var i = 0; i < DataScore.length(); i++) {
+            if (DataScoreAll[index] < DataScore[i]) {
+              DataScoreAll[index] = DataScore[i]
+            }
+          }
+        })
+        context.commit('setscoreboard', DataScoreAll)
       })
-      context.commit('setscoreboard', snapshot.val())
     }
   }
 })
