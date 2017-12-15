@@ -98,6 +98,7 @@ export const store = new Vuex.Store({
         db.ref('players').child(user.uid).set(tmp)
         context.commit('setKeyplayer', user.uid)
         context.commit('setUser', tmp)
+        db.ref('players').child(context.state.keyPlayer + '/status').set('0')
         router.push('/lobby')
       }).catch(function (error) {
         console.log(error)
@@ -125,6 +126,8 @@ export const store = new Vuex.Store({
       var key = db.ref('partys').push(Object).getKey()
       context.commit('setJoinMatch', key)
       context.commit('setstatusDraw', '1')
+      db.ref('players').child(context.state.keyPlayer + '/status').set('1')
+      router.push('/draw')
       // db.ref('currentMatch/' + context.state.keyPlayer).set(key)
       // console.log(snapshot.ref.key) ดึง key
     },
@@ -144,12 +147,23 @@ export const store = new Vuex.Store({
     },
     joinRoom (context, idhost) {
       context.commit('setJoinMatch', idhost)
+      db.ref('players').child(context.state.keyPlayer + '/status').set('0')
       router.push('/draw')
     },
     checkMatch (context) {
       if (context.state.CurrentMatch === '') {
         router.push('/lobby')
       }
+    },
+    checkStatus (context) {
+      db.ref('players/' + context.state.keyPlayer).once('value', (snapshot) => {
+        context.commit('setstatusDraw', snapshot.val().status)
+      })
+    },
+    copyDraw (context) {
+      db.ref('partys/' + context.state.CurrentMatch + '/draw').once('value', (snapshot) => {
+        console.log(snapshot.val())
+      })
     }
   }
 })

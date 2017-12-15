@@ -3,11 +3,14 @@
     
 
     
-    <!-- <canvas id="myCanvas2" width="500" height="500"></canvas> -->
+  
     <div class="columns is-gapless">
       <div class="column">
-        <canvas id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
-        <input type="text" class="" placeholder="" v-model="resultQuestion"><button @click="checkResult(resultQuestion)" class="button is-primary is-outlined">ส่งคำตอบ</button>
+
+       <button @click="copyDraw">ddd</button>
+        <canvas v-if="statusDraw === '1'" id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
+        <!-- <canvas v-if="statusDraw === '0'"  id="myCanvas" width="500" height="500"></canvas> -->
+        <input v-if="statusDraw === '0'" type="text" class="" placeholder="" v-model="resultQuestion"><button v-if="statusDraw === '0'" @click="checkResult(resultQuestion)" class="button is-primary is-outlined">ส่งคำตอบ</button>
       </div>
       <table class="table">
         <tr>
@@ -26,20 +29,12 @@
         </td>
         <td></td>
           <td><br>
-            <P v-for="(show,index) in showResult">
+            <p v-for="(show,index) in showResult">
                 {{showResult[index]}}
-              </P>
+              </p>
           </td>
         </tr>
       </table>
-      <div class="column is-one-fifth">
-        
-      </div>
-      <div class="column is-half">
-          <div class="column is-one-quarter">
-              
-          </div>
-        </div>
       </div>
     </div>
 </template>
@@ -66,7 +61,9 @@ export default {
   computed: {
     ...mapGetters([
       'dataQuestion',
-      'CurrentMatch'
+      'CurrentMatch',
+      'keyPlayer',
+      'statusDraw'
     ])
   },
   methods: {
@@ -74,7 +71,9 @@ export default {
       'setting',
       'saveData',
       'setting',
-      'checkMatch'
+      'checkMatch',
+      'checkStatus',
+      'copyDraw'
     ]),
     // copy () {
     //   var ref = firebase.database().ref('draw/match')
@@ -144,17 +143,16 @@ export default {
     }
       // this.copy()
   },
-  created () {
-    this.checkMatch()
-  },
   mounted () {
+    this.setting()
+    this.checkMatch()
+    this.checkStatus()
     this.c = document.getElementById('myCanvas')
     this.ctx = this.c.getContext('2d')
     this.ctx.lineWidth = 5
     // this.c2 = document.getElementById('myCanvas2')
     // this.ctx2 = this.c2.getContext('2d')
     // this.ctx2.lineWidth = 5
-    this.setting()
   }
 }
 </script>
