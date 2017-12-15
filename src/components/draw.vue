@@ -2,7 +2,7 @@
   <div class="hello" >
     
 
-    
+    ข้อที่ {{ countQuestion + 1 }}    
 
     <div class="columns is-gapless">
       <div v-if="statusDraw === '1'" class="column">
@@ -61,7 +61,6 @@ export default {
       showResult: [],
       countQuestion: 0,
       result: [''],
-      gameReady: '0'
     }
   },
   computed: {
@@ -70,7 +69,8 @@ export default {
       'CurrentMatch',
       'keyPlayer',
       'statusDraw',
-      'copyDrawALL'
+      'copyDrawALL',
+      'countQuestion'
     ])
   },
   methods: {
@@ -140,8 +140,7 @@ export default {
       this.result.push(this.resultQuestion)
       // this.result += this.resultQuestion + '<br />'
       if (this.dataQuestion[this.countQuestion] === result) {
-        console.log('push คะแนนเข้า firebase ตาม user ที่ได้คะแนนpush ลำดับคำถามเข้า firebase')
-        this.countQuestion++
+        this.nextQuestion()
         this.showResult.push('คำตอบถูกต้อง')
       } else {
         this.showResult.push('คำตอบไม่ถูกต้อง')
