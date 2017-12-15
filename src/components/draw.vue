@@ -59,8 +59,7 @@ export default {
       c2: {},
       resultQuestion: '',
       showResult: [],
-      countQuestion: 0,
-      result: [''],
+      result: ['']
     }
   },
   computed: {
@@ -80,13 +79,13 @@ export default {
       'setting',
       'checkMatch',
       'checkStatus',
-      'copyDraw'
+      'copyDraw',
+      'nextQuestion'
     ]),
     copy () {
       this.c = document.getElementById('myCanvas')
       this.ctx = this.c.getContext('2d')
       this.ctx.lineWidth = 5
-      console.log(this.copyDrawALL)
       Object.keys(this.copyDrawALL).map((key, index) => {
         switch (this.copyDrawALL[key].type) {
           case 'moveTo':
@@ -137,7 +136,7 @@ export default {
       }
     },
     checkResult (result) {
-      this.result.push(this.resultQuestion)
+      this.result.push(result)
       // this.result += this.resultQuestion + '<br />'
       if (this.dataQuestion[this.countQuestion] === result) {
         this.nextQuestion()

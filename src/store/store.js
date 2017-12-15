@@ -126,7 +126,7 @@ export const store = new Vuex.Store({
           dataQ.push(questionData[key])
         })
         db.ref('partys/' + context.state.CurrentMatch + '/countQuestion').on('value', (snapshot) => {
-          context.commit('setQuestion', snapshot.val())
+          context.commit('setcountQuestion', snapshot.val())
         })
       }
       )
@@ -174,7 +174,6 @@ export const store = new Vuex.Store({
       })
     },
     copyDraw (context) {
-      console.log('copyDraw')
       db.ref('partys/' + context.state.CurrentMatch + '/draw').on('value', (snapshot) => {
         context.commit('setCopyDraw', snapshot.val())
       })
