@@ -9,7 +9,7 @@
               Score
             </router-link>
             </li>
-          <li><a>Logout ?</a></li>
+          <li @click="logout()"><a>Logout ?</a></li>
         </ul>
       </div>
       <div class="container">
@@ -25,16 +25,18 @@
 <table class="table">
   <thead>
     <tr>
-      <th><abbr>No</abbr></th>
+      <th><abbr></abbr></th>
       <th>Name</th>
+      <th>Player Online</th>
       <th><abbr>JOIN</abbr></th>
     </tr>
   </thead>
   <tfoot>
-    <tr v-for="(party, key, index) in Partys">
-      <th><abbr>{{++index}}</abbr></th>
-      <th><abbr></abbr></th>
-      <th><abbr><button class="button is-info" @click="joinRoomLobby(key)"> JOIN </button></abbr></th>
+    <tr v-for="(party, key, index) in Partys" >
+      <th v-if="party.countPlayer !== 4"><abbr><img :src="userCreate[index].fb.photoURL" ></abbr></th>
+      <th v-if="party.countPlayer !== 4"><abbr>{{ userCreate[index].fb.displayName }}</abbr></th>
+      <th v-if="party.countPlayer !== 4"><abbr><center>{{ party.countPlayer }}/4</center></abbr></th>
+      <th v-if="party.countPlayer !== 4"><abbr><button class="button is-info" @click="joinRoomLobby(key)"> JOIN </button></abbr></th>
     </tr>
   </tfoot>
 </table>
@@ -61,7 +63,8 @@ export default {
       'createparty',
       'init',
       'loadpartys',
-      'joinRoom'
+      'joinRoom',
+      'logout'
     ]),
     createroom () {
       var obj = {
@@ -70,7 +73,9 @@ export default {
         idplayer2: '',
         idplayer3: '',
         idplayer4: '',
-        countQuestion: 0
+        countQuestion: 0,
+        countPlayer: 0
+
       }
       this.createparty(obj)
     },
