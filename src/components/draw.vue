@@ -1,6 +1,6 @@
 <template>
   <div class="hello" >
-    
+  <button class="button is-primary" @click="backPage()">ย้อนหลัง</button>    
 
     ข้อที่ {{ countQuestion + 1 }}    
 
