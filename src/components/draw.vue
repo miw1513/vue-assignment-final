@@ -1,5 +1,6 @@
 <template>
   <div class="hello" >
+<<<<<<< HEAD
     <div class="columns">
   <div class="column is-half">
     <canvas id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
@@ -46,6 +47,13 @@
   </div> 
 </div>
     ข้อที่ {{ countQuestion + 1 }}    
+=======
+  <button class="button is-primary" @click="backPage()">ย้อนหลัง</button>    
+    <div v-if="statusDraw === '1'">
+      วาดรูป {{ dataQuestion[countQuestion] }}   
+    </div>
+     
+>>>>>>> b4db1a80274303d3fdafa6c1ca8b8efbbb9d45c9
 
     <div class="columns is-gapless">
       <div v-if="statusDraw === '1'" class="column">

@@ -167,17 +167,19 @@ export const store = new Vuex.Store({
     joinRoom (context, idhost) {
       context.commit('setJoinMatch', idhost)
       for (var z = 1; z <= 4; z++) {
-        console.log(z)
         db.ref('partys/' + context.state.CurrentMatch + '/idplayer' + z).on('value', (snapshot) => {
           if (snapshot.val() === '') {
             db.ref('partys/').child(context.state.CurrentMatch + '/idplayer' + z).set(context.state.keyPlayer)
+            db.ref('players').child(context.state.keyPlayer + '/status').set('0')
+            db.ref('partys/' + context.state.CurrentMatch + '/countPlayer').once('value', (snapshot) => {
+              console.log(snapshot.val())
+              var countPlayers = snapshot.val() + 1
+              db.ref('partys/').child(context.state.CurrentMatch + '/countPlayer').set(countPlayers)
+            })
             z = 5
           }
         })
       }
-      db.ref('players').child(context.state.keyPlayer + '/status').set('0')
-      db.ref('partys/' + context.state.CurrentMatch + '/countPlayer').on('value', (snapshot) => {
-      })
       router.push('/draw')
     },
     checkMatch (context) {
@@ -205,9 +207,23 @@ export const store = new Vuex.Store({
       db.ref('players').on('value', (snapshot) => {
         DataScore = snapshot.val()
         Object.keys(DataScore).map((key, index) => {
-          console.log(DataScore[key])
           DataScoreAll.push(DataScore[key])
         })
+        var length = DataScoreAll.length
+        for (var i = 0; i < length - 1; i++) {
+          var min = i
+          for (var j = i + 1; j < length; j++) {
+            if (DataScoreAll[j].score > DataScoreAll[min].score) {
+              min = j
+            }
+          }
+          if (min !== i) {
+            var tmp = DataScoreAll[i]
+            DataScoreAll[i] = DataScoreAll[min]
+            DataScoreAll[min] = tmp
+          }
+        }
+        console.log(DataScoreAll)
         //   for (var i = 0; i < DataScoreAll.length; i++) {
         //     for (var u = 0; u < DataScoreAll.length; u++) {
         //     if (DataScoreAll[index] < DataScoreAll[i]) {
