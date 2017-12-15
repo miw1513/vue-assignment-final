@@ -9,7 +9,7 @@
               Score
             </router-link>
             </li>
-          <li><a>Logout </a></li>
+          <li><a>Logout ?</a></li>
         </ul>
       </div>
       <div class="container">
