@@ -10,6 +10,8 @@
       </div>
       <div class="columns">
         <div class="column is-two-fifths"></div>
+        <div class="column is-two-fifths"></div>
+        <div class="column is-two-fifths"></div>
       </div>
       <div class="columns">
         <div class="column is-two-fifths"></div>
@@ -18,10 +20,37 @@
       
       <div class="columns">
         <div class="column is-two-fifths"></div>
-        <div class="container">
         <div class="column is-two-fifths">
-       <div v-for="party in Partys">        
-      <button class="button is-primary" > JOIN </button>
+  <div class="container">
+  <table class="table">
+  <thead>
+    <tr>
+      <th><abbr title="Position">No</abbr></th>
+      <th>Name</th>
+      <th><abbr title="Played">JOIN</abbr></th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr v-for="party in Partys">
+      <th><abbr title="Position">No</abbr></th>
+      <th></th>
+      <th><abbr><button class="button is-info"> JOIN </button></abbr></th>
+    </tr>
+  </tfoot>
+  <tbody>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr class="is-selected">
+    </tr>
+  </tbody>
+</table>
+  </div>
+       <div v-for="party in Partys"> 
+      <button class="button is-info"> JOIN </button>
       <br><br>
     </div>
         </div>
