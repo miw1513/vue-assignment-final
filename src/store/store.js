@@ -206,8 +206,12 @@ export const store = new Vuex.Store({
     },
     copyDraw (context) {
       console.log('copyDraw')
-      db.ref('partys/' + context.state.CurrentMatch + '/draw').on('value', (snapshot) => {
-        context.commit('setCopyDraw', snapshot.val())
+      db.ref('partys/' + context.state.CurrentMatch + '/draw').once('value', (snapshot) => {
+        if (snapshot.val()) {
+          context.commit('setCopyDraw', snapshot.val())
+        } else {
+          context.commit('setCopyDraw', null)
+        }
       })
     },
     nextQuestion (context) {
@@ -270,7 +274,7 @@ export const store = new Vuex.Store({
       }
     },
     deleteDraw (context) {
-      db.ref('partys').child(context.state.CurrentMatch + '/draw').remove()
+      db.ref('partys').child(context.state.CurrentMatch + '/draw').set(null)
     }
   }
 })

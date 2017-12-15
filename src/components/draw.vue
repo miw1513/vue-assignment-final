@@ -69,6 +69,15 @@ export default {
       'countQuestion',
       'myscore'
     ])
+    // copyDraww () {
+    //   if (this.statusDraw === '0') {
+    //     this.copyDraw()
+    //     this.copy()
+    //     return 'eiei'
+    //   } else {
+    //     return 'else'
+    //   }
+    // }
   },
   methods: {
     ...mapActions([
@@ -146,6 +155,7 @@ export default {
         this.nextQuestion()
         this.saveScore()
         this.deleteDraw()
+        this.ctx.clearRect(0, 0, 500, 500)
         this.showResult.push('คำตอบถูกต้อง')
       } else {
         this.showResult.push('คำตอบไม่ถูกต้อง')
@@ -155,10 +165,14 @@ export default {
   },
   mounted () {
       // this.copy()
-    if (this.statusDraw === '0') {
-      this.copyDraw()
-      this.copy()
-    }
+    setInterval(() => {
+      if (this.statusDraw === '0') {
+        this.copyDraw()
+        if (this.copyDrawALL !== null) {
+          this.copy()
+        }
+      }
+    }, 1000)
     this.setting()
     this.checkMatch()
     this.checkStatus()
