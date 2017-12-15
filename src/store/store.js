@@ -32,7 +32,8 @@ export const store = new Vuex.Store({
     copyDrawALL: {},
     scoreboard: '',
     countQuestion: 0,
-    playerSlot: ''
+    playerSlot: '',
+    myscore: 0
   },
   getters: {
     user: state => state.user,
@@ -44,7 +45,8 @@ export const store = new Vuex.Store({
     statusDraw: state => state.statusDraw,
     copyDrawALL: state => state.copyDrawALL,
     scoreboard: state => state.scoreboard,
-    countQuestion: state => state.countQuestion
+    countQuestion: state => state.countQuestion,
+    myscore: state => state.myscore
   },
   mutations: {
     setReady (state) {
@@ -82,6 +84,9 @@ export const store = new Vuex.Store({
     },
     setSlotPlayer (state, data) {
       state.playerSlot = data
+    },
+    setmyscore (state, data) {
+      state.myscore = data
     }
   },
   actions: {
@@ -137,6 +142,7 @@ export const store = new Vuex.Store({
         })
         db.ref('partys/' + context.state.CurrentMatch + '/countQuestion').on('value', (snapshot) => {
           context.commit('setcountQuestion', snapshot.val())
+          console.log(snapshot.val())
         })
       }
       )
@@ -241,6 +247,8 @@ export const store = new Vuex.Store({
       })
     },
     saveScore (context) {
+      db.ref('partys/' + context.state.keyPlayer + '/score').set(context.state.myscore + 1)
+      context.commit('setmyscore', context.state.myscore + 1)
     },
     backPage (context) {
       if (context.state.statusDraw === '1') {
@@ -260,6 +268,9 @@ export const store = new Vuex.Store({
         context.commit('setscoreboard', '')
         router.push('/lobby')
       }
+    },
+    deleteDraw (context) {
+      db.ref('partys').child(context.state.CurrentMatch + '/draw').remove()
     }
   }
 })

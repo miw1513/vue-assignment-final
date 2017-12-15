@@ -1,19 +1,21 @@
 <template>
   <div class="hello" >
+    {{myscore}}
     <div class="columns">
   <div class="column is-three-fifths">
-    <canvas id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
+    <canvas v-if="statusDraw === '1'" id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
+    <canvas v-if="statusDraw === '0'" id="myCanvas"  width="500" height="500"></canvas>
   </div>
   <div class="column">
     <div class="myBox">
       <table class="table">
         <tr v-for="(resul,index) in result">
           <td>
-          {{resul}}
-        </td>
-        <td></td>
+           {{resul}}
+          </td>
+          <td></td>
           <td>
-             {{ showResult }}
+            {{ showResult[index] }}
           </td>
         </tr>
         </table>
@@ -23,18 +25,16 @@
 <section class="hero is-warning is-medium">
     <div class="columns is-mobile">
   <div class="column is-half is-offset-one-quarter">
-    
-    
   </div>
 </div>
 <div class="columns is-mobile">
   <div class="column is-half is-offset-one-quarter"> 
+    <br>
   <input  type="text" class="input is-rounded"  v-model="resultQuestion">
+  <br><br>
   <button  @click="checkResult(resultQuestion)" class="button is-primary is-outlined">ส่งคำตอบ</button>
   <button class="button is-info is-outlined " @click="backPage()">ย้อนหลัง</button>  
-
-  
-
+  <br><br>
   </div> 
 </div>
 </section>
@@ -55,7 +55,7 @@ export default {
       c: {},
       c2: {},
       resultQuestion: '',
-      showResult: [],
+      showResult: [''],
       result: ['']
     }
   },
@@ -66,7 +66,8 @@ export default {
       'keyPlayer',
       'statusDraw',
       'copyDrawALL',
-      'countQuestion'
+      'countQuestion',
+      'myscore'
     ])
   },
   methods: {
@@ -78,7 +79,9 @@ export default {
       'checkStatus',
       'copyDraw',
       'nextQuestion',
-      'backPage'
+      'backPage',
+      'saveScore',
+      'deleteDraw'
     ]),
     copy () {
       this.c = document.getElementById('myCanvas')
@@ -99,6 +102,9 @@ export default {
       })
     },
     startDraw (event) {
+      this.c = document.getElementById('myCanvas')
+      this.ctx = this.c.getContext('2d')
+      this.ctx.lineWidth = 5
       this.ctx.moveTo(event.offsetX, event.offsetY)
       var picture = {}
       picture = {
@@ -139,10 +145,12 @@ export default {
       if (this.dataQuestion[this.countQuestion] === result) {
         this.nextQuestion()
         this.saveScore()
+        this.deleteDraw()
         this.showResult.push('คำตอบถูกต้อง')
       } else {
         this.showResult.push('คำตอบไม่ถูกต้อง')
       }
+      console.log(this.showResult)
     }
   },
   mounted () {

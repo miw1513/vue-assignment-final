@@ -32,8 +32,13 @@
     </tr>
   </thead>
   <tfoot>
+<<<<<<< HEAD
     <tr v-for="(party, key, index) in Partys" >
       <th v-if="party.countPlayer !== 4 "><abbr><img style="border-radius:180px;" :src="userCreate[index].fb.photoURL" ></abbr></th>
+=======
+    <tr v-for="(party, key, index) in Partys" v-if="userCreate[index]">
+      <th v-if="party.countPlayer !== 4 "><abbr><img :src="userCreate[index].fb.photoURL"></abbr></th>
+>>>>>>> 4a6b97e40523c2dad4f43ac50d141a8d023fb7d5
       <th v-if="party.countPlayer !== 4 "><abbr>{{ userCreate[index].fb.displayName }}</abbr></th>
       <th v-if="party.countPlayer !== 4 "><abbr><center>{{ party.countPlayer }}/4</center></abbr></th>
       <th v-if="party.countPlayer !== 4 "><abbr><button class="button is-info" @click="joinRoomLobby(key)"> JOIN </button></abbr></th>
