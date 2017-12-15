@@ -25,15 +25,15 @@
 <table class="table">
   <thead>
     <tr>
-      <th><abbr title="Position">No</abbr></th>
+      <th><abbr>No</abbr></th>
       <th>Name</th>
-      <th><abbr title="Played">JOIN</abbr></th>
+      <th><abbr>JOIN</abbr></th>
     </tr>
   </thead>
   <tfoot>
     <tr v-for="(party, key, index) in Partys">
       <th><abbr>{{++index}}</abbr></th>
-      <th></th>
+      <th><abbr>{{party}}</abbr></th>
       <th><abbr><button class="button is-info" @click="joinRoomLobby(key)"> JOIN </button></abbr></th>
     </tr>
   </tfoot>
