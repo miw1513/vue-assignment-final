@@ -31,7 +31,8 @@ export const store = new Vuex.Store({
     statusDraw: '0',
     copyDrawALL: {},
     scoreboard: '',
-    countQuestion: 0
+    countQuestion: 0,
+    playerSlot: ''
   },
   getters: {
     user: state => state.user,
@@ -78,6 +79,9 @@ export const store = new Vuex.Store({
     },
     setscoreboard (state, data) {
       state.scoreboard = data
+    },
+    setSlotPlayer (state, data) {
+      state.playerSlot = data
     }
   },
   actions: {
@@ -156,11 +160,13 @@ export const store = new Vuex.Store({
         context.commit('setPartys', snapshot.val())
         const playerCreateData = snapshot.val()
         var playerCreateOnce = []
-        Object.keys(playerCreateData).map((key, index) => {
-          db.ref('players/' + playerCreateData[key].idhost).on('value', (snapshot) => {
-            playerCreateOnce.push(snapshot.val())
+        if (playerCreateData) {
+          Object.keys(playerCreateData).map((key, index) => {
+            db.ref('players/' + playerCreateData[key].idhost).on('value', (snapshot) => {
+              playerCreateOnce.push(snapshot.val())
+            })
           })
-        })
+        }
         context.commit('setUserCreate', playerCreateOnce)
       })
     },
@@ -171,8 +177,8 @@ export const store = new Vuex.Store({
           if (snapshot.val() === '') {
             db.ref('partys/').child(context.state.CurrentMatch + '/idplayer' + z).set(context.state.keyPlayer)
             db.ref('players').child(context.state.keyPlayer + '/status').set('0')
+            context.commit('setSlotPlayer', z)
             db.ref('partys/' + context.state.CurrentMatch + '/countPlayer').once('value', (snapshot) => {
-              console.log(snapshot.val())
               var countPlayers = snapshot.val() + 1
               db.ref('partys/').child(context.state.CurrentMatch + '/countPlayer').set(countPlayers)
             })
@@ -236,17 +242,24 @@ export const store = new Vuex.Store({
     },
     saveScore (context) {
     },
-    backPage (context,Object) {
+    backPage (context) {
       if (context.state.statusDraw === '1') {
         db.ref('partys').child(context.state.CurrentMatch).remove()
         context.commit('setJoinMatch', '')
         context.commit('setstatusDraw', '')
+        context.commit('setscoreboard', '')
+        router.push('/lobby')
       } else if (context.state.statusDraw === '0') {
-
+        db.ref('partys/' + context.state.CurrentMatch + '/countPlayer').once('value', (snapshot) => {
+          console.log(snapshot.val() - 1)
+          db.ref('partys/').child(context.state.CurrentMatch + '/countPlayer').set(snapshot.val() - 1)
+        })
+        db.ref('partys/').child(context.state.CurrentMatch + '/idplayer' + context.state.playerSlot).set('')
+        context.commit('setJoinMatch', '')
+        context.commit('setstatusDraw', '')
+        context.commit('setscoreboard', '')
+        router.push('/lobby')
       }
-      
-
-
     }
   }
 })

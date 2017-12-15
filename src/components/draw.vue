@@ -77,7 +77,8 @@ export default {
       'checkMatch',
       'checkStatus',
       'copyDraw',
-      'nextQuestion'
+      'nextQuestion',
+      'backPage'
     ]),
     copy () {
       this.c = document.getElementById('myCanvas')

@@ -22,7 +22,7 @@
         <div class="column is-two-fifths"></div>
       </div>
 <center>
-<table class="table">
+<table class="table" v-if="Partys">
   <thead>
     <tr>
       <th><abbr></abbr></th>
@@ -33,10 +33,10 @@
   </thead>
   <tfoot>
     <tr v-for="(party, key, index) in Partys" >
-      <th v-if="party.countPlayer !== 4"><abbr><img :src="userCreate[index].fb.photoURL" ></abbr></th>
-      <th v-if="party.countPlayer !== 4"><abbr>{{ userCreate[index].fb.displayName }}</abbr></th>
-      <th v-if="party.countPlayer !== 4"><abbr><center>{{ party.countPlayer }}/4</center></abbr></th>
-      <th v-if="party.countPlayer !== 4"><abbr><button class="button is-info" @click="joinRoomLobby(key)"> JOIN </button></abbr></th>
+      <th v-if="party.countPlayer !== 4 "><abbr><img :src="userCreate[index].fb.photoURL" ></abbr></th>
+      <th v-if="party.countPlayer !== 4 "><abbr>{{ userCreate[index].fb.displayName }}</abbr></th>
+      <th v-if="party.countPlayer !== 4 "><abbr><center>{{ party.countPlayer }}/4</center></abbr></th>
+      <th v-if="party.countPlayer !== 4 "><abbr><button class="button is-info" @click="joinRoomLobby(key)"> JOIN </button></abbr></th>
     </tr>
   </tfoot>
 </table>
