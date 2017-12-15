@@ -176,6 +176,8 @@ export const store = new Vuex.Store({
         })
       }
       db.ref('players').child(context.state.keyPlayer + '/status').set('0')
+      db.ref('partys/' + context.state.CurrentMatch + '/countPlayer').on('value', (snapshot) => {
+      })
       router.push('/draw')
     },
     checkMatch (context) {
