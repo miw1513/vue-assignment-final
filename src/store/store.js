@@ -30,6 +30,7 @@ export const store = new Vuex.Store({
     CurrentMatch: '',
     statusDraw: '0',
     copyDrawALL: {},
+    scoreboard: '',
     countQuestion: 0
   },
   getters: {
@@ -41,6 +42,7 @@ export const store = new Vuex.Store({
     userCreate: state => state.userCreate,
     statusDraw: state => state.statusDraw,
     copyDrawALL: state => state.copyDrawALL,
+    scoreboard: state => state.scoreboard,
     countQuestion: state => state.countQuestion
   },
   mutations: {
@@ -73,6 +75,9 @@ export const store = new Vuex.Store({
     },
     setcountQuestion (state, data) {
       state.countQuestion = data
+    },
+    setscoreboard (state, data) {
+      state.scoreboard = data
     }
   },
   actions: {
@@ -174,12 +179,20 @@ export const store = new Vuex.Store({
       })
     },
     copyDraw (context) {
+      console.log('copyDraw')
       db.ref('partys/' + context.state.CurrentMatch + '/draw').on('value', (snapshot) => {
         context.commit('setCopyDraw', snapshot.val())
       })
     },
     nextQuestion (context) {
       db.ref('partys/' + context.state.CurrentMatch + '/countQuestion').set(context.state.countQuestion + 1)
+    },
+    getscoreboard (context) {
+      var DataScore = []
+      db.ref('players').on('value', (snapshot) => {
+        DataScore = snapshot.val()
+      })
+      context.commit('setscoreboard', snapshot.val())
     }
   }
 })
