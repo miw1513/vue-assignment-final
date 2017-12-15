@@ -74,7 +74,8 @@ export default {
         idplayer1: '',
         idplayer2: '',
         idplayer3: '',
-        idplayer4: ''
+        idplayer4: '',
+        countQuestion: 0
       }
       this.createparty(obj)
     },

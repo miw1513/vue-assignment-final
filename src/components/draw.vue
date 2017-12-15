@@ -1,16 +1,19 @@
 <template>
-  <div class="hello">
+  <div class="hello" >
     
 
-    
-  
+    ข้อที่ {{ countQuestion + 1 }}    
+
     <div class="columns is-gapless">
-      <div class="column">
-
-       <button @click="copyDraw">ddd</button>
-        <canvas v-if="statusDraw === '1'" id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
-        <!-- <canvas v-if="statusDraw === '0'"  id="myCanvas" width="500" height="500"></canvas> -->
-        <input v-if="statusDraw === '0'" type="text" class="" placeholder="" v-model="resultQuestion"><button v-if="statusDraw === '0'" @click="checkResult(resultQuestion)" class="button is-primary is-outlined">ส่งคำตอบ</button>
+      <div v-if="statusDraw === '1'" class="column">
+       
+        <canvas id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
+      </div>
+      
+      <div v-if="statusDraw === '0'" class="column">
+         <canvas id="myCanvas" width="500" height="500"></canvas>
+        <input  type="text" class=""  v-model="resultQuestion">
+        <button  @click="checkResult(resultQuestion)" class="button is-primary is-outlined">ส่งคำตอบ</button>
       </div>
       <div class="myBox">
       <table class="table">
@@ -31,22 +34,14 @@
         <td></td>
           <td><br>
             <p v-for="(show,index) in showResult">
-                {{showResult[index]}}
+                {{ showResult[index] }}
               </p>
-          </td>
-        </tr>
-      </table>
-      </div>
-      <div class="column is-one-fifth">
-        
-      </div>
-      <div class="column is-half">
-          <div class="column is-one-quarter">
-              
-          </div>
-        </div>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -65,7 +60,7 @@ export default {
       resultQuestion: '',
       showResult: [],
       countQuestion: 0,
-      result: ['']
+      result: [''],
     }
   },
   computed: {
@@ -73,7 +68,9 @@ export default {
       'dataQuestion',
       'CurrentMatch',
       'keyPlayer',
-      'statusDraw'
+      'statusDraw',
+      'copyDrawALL',
+      'countQuestion'
     ])
   },
   methods: {
@@ -85,25 +82,25 @@ export default {
       'checkStatus',
       'copyDraw'
     ]),
-    // copy () {
-    //   var ref = firebase.database().ref('draw/match')
-    //   ref.once('value').then(snapshot => {
-    //     const drawData = snapshot.val()
-    //     Object.keys(drawData).map((key, index) => {
-    //       switch (drawData[key].type) {
-    //         case 'moveTo':
-    //           this.ctx2.moveTo(drawData[key].x, drawData[key].y)
-    //           break
-    //         case 'lineTo':
-    //           this.ctx2.lineTo(drawData[key].x, drawData[key].y)
-    //           break
-    //         case 'stroke':
-    //           this.ctx2.stroke()
-    //           break
-    //       }
-    //     })
-    //   })
-    // },
+    copy () {
+      this.c = document.getElementById('myCanvas')
+      this.ctx = this.c.getContext('2d')
+      this.ctx.lineWidth = 5
+      console.log(this.copyDrawALL)
+      Object.keys(this.copyDrawALL).map((key, index) => {
+        switch (this.copyDrawALL[key].type) {
+          case 'moveTo':
+            this.ctx.moveTo(this.copyDrawALL[key].x, this.copyDrawALL[key].y)
+            break
+          case 'lineTo':
+            this.ctx.lineTo(this.copyDrawALL[key].x, this.copyDrawALL[key].y)
+            break
+          case 'stroke':
+            this.ctx.stroke()
+            break
+        }
+      })
+    },
     startDraw (event) {
       this.ctx.moveTo(event.offsetX, event.offsetY)
       var picture = {}
@@ -140,33 +137,32 @@ export default {
       }
     },
     checkResult (result) {
-      console.log(result)
       this.result.push(this.resultQuestion)
       // this.result += this.resultQuestion + '<br />'
       if (this.dataQuestion[this.countQuestion] === result) {
-        console.log('push คะแนนเข้า firebase ตาม user ที่ได้คะแนนpush ลำดับคำถามเข้า firebase')
-        this.countQuestion++
+        this.nextQuestion()
         this.showResult.push('คำตอบถูกต้อง')
       } else {
         this.showResult.push('คำตอบไม่ถูกต้อง')
       }
     }
-      // this.copy()
   },
   mounted () {
+      // this.copy()
+    if (this.statusDraw === '0') {
+      this.copyDraw()
+      this.copy()
+    }
     this.setting()
     this.checkMatch()
     this.checkStatus()
-    this.c = document.getElementById('myCanvas')
-    this.ctx = this.c.getContext('2d')
-    this.ctx.lineWidth = 5
+
     // this.c2 = document.getElementById('myCanvas2')
     // this.ctx2 = this.c2.getContext('2d')
     // this.ctx2.lineWidth = 5
   }
 }
 </script>
-
 <style scoped>
 canvas {
   border: 2px solid #666;

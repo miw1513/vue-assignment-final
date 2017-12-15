@@ -1,5 +1,20 @@
 <template>
 
+
+<section class="hero is-warning is-medium">
+  <div class="hero-body">
+<nav class="level">
+ <div class="level-right">
+    <router-link v-bind:to="'lobby'">
+    <a class="button is-info is-outlined is-large">GO TO LOBBY</a>
+    </router-link> 
+    </div>
+    <div class="level-left">
+    <a class="button is-danger is-outlined is-large" @click="logout()">LOGOUT</a>
+    <!-- <p class="level-item"><a class="button is-success"> LOGOUT </a></p> -->
+    </div>
+</nav>
+
   <div class="Content ">
     <p class="title"> 
       DRAWSOMETHING      
@@ -27,18 +42,31 @@
         <div class="column">
         </div>
     </div>
-    <div>
-      <router-link v-bind:to="'lobby'">
-      <button class="button is-primary" > GO TO LOBBY </button>
-      </router-link>
-      <br><br>
-    </div>
+
 
   </div>
+  </div>
+</section>
 
 </template>
+<script>
+import { mapActions, mapGetters } from 'vuex'
 
-  <style>
+export default {
+  computed: {
+    ...mapGetters([
+      'isReady'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'login',
+      'logout'
+    ])
+  }
+}
+</script>
+<style>
     #name {
       /* color: #7FFFD4;   */
     }
@@ -48,4 +76,4 @@
       height: 50px
     }
     
-    </style>
+</style>

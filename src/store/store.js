@@ -28,7 +28,9 @@ export const store = new Vuex.Store({
     Partys: '',
     userCreate: [],
     CurrentMatch: '',
-    statusDraw: '0'
+    statusDraw: '0',
+    copyDrawALL: {},
+    countQuestion: 0
   },
   getters: {
     user: state => state.user,
@@ -37,7 +39,9 @@ export const store = new Vuex.Store({
     keyPlayer: state => state.keyPlayer,
     Partys: state => state.Partys,
     userCreate: state => state.userCreate,
-    statusDraw: state => state.statusDraw
+    statusDraw: state => state.statusDraw,
+    copyDrawALL: state => state.copyDrawALL,
+    countQuestion: state => state.countQuestion
   },
   mutations: {
     setReady (state) {
@@ -63,6 +67,12 @@ export const store = new Vuex.Store({
     },
     setstatusDraw (state, data) {
       state.statusDraw = data
+    },
+    setCopyDraw (state, data) {
+      state.copyDrawALL = data
+    },
+    setcountQuestion (state, data) {
+      state.countQuestion = data
     }
   },
   actions: {
@@ -115,6 +125,9 @@ export const store = new Vuex.Store({
         Object.keys(questionData).map((key, index) => {
           dataQ.push(questionData[key])
         })
+        db.ref('partys/' + context.state.CurrentMatch + '/countQuestion').on('value', (snapshot) => {
+          context.commit('setQuestion', snapshot.val())
+        })
       }
       )
       context.commit('setQuestion', dataQ)
@@ -161,9 +174,13 @@ export const store = new Vuex.Store({
       })
     },
     copyDraw (context) {
-      db.ref('partys/' + context.state.CurrentMatch + '/draw').once('value', (snapshot) => {
-        console.log(snapshot.val())
+      console.log('copyDraw')
+      db.ref('partys/' + context.state.CurrentMatch + '/draw').on('value', (snapshot) => {
+        context.commit('setCopyDraw', snapshot.val())
       })
+    },
+    nextQuestion (context) {
+      db.ref('partys/' + context.state.CurrentMatch + '/countQuestion').set(context.state.countQuestion + 1)
     }
   }
 })
