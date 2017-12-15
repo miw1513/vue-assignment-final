@@ -1,12 +1,11 @@
 <template>
   <div class="hello">
+    <div class="container">
     <div class="column" style="background-color:Orange;">
-      <center><img src="<a href="target="_blank"<img border="0" src="http://image.free.in.th/v/2013/ie/171125123203.png" alt="images by free.in.th" width="450px" height="450px"/></center>
+      <img src="<a href="target="_blank"<img border="0" src="http://image.free.in.th/v/2013/ie/171125123203.png" alt="images by free.in.th" width="450px" height="450px"/>
       <div class="columns">
         <div class="column is-two-fifths"></div>
-        <div class="container">
         <div class="column is-two-fifths"><button class="button is-large" @click="createroom () "> CREATE ROOM </button></div>
-        </div>
       </div>
       <div class="columns">
         <div class="column is-two-fifths"></div>
@@ -16,12 +15,10 @@
       <div class="columns">
         <div class="column is-two-fifths"></div>
       </div>
-      
-      
       <div class="columns">
         <div class="column is-two-fifths"></div>
-        <div class="column is-two-fifths">
-  <div class="container">
+        <div class="column is-two-fifths"></div>
+      </div>   
   <table class="table">
   <thead>
     <tr>
@@ -31,10 +28,10 @@
     </tr>
   </thead>
   <tfoot>
-    <tr v-for="party in Partys">
+    <tr v-for="(party, key, index) in Partys">
       <th><abbr title="Position">No</abbr></th>
       <th></th>
-      <th><abbr><button class="button is-info"> JOIN </button></abbr></th>
+      <th><abbr><button class="button is-info" @click="joinRoomLobby(key)"> JOIN </button></abbr></th>
     </tr>
   </tfoot>
   <tbody>
@@ -48,17 +45,9 @@
     </tr>
   </tbody>
 </table>
-  </div>
-       <div v-for="party in Partys"> 
-      <button class="button is-info"> JOIN </button>
-      <br><br>
     </div>
-        </div>
-        </div>
     </div>
-  </div> 
-  </div> 
-  </div>  
+    </div>
 </template>
 
 <script>
