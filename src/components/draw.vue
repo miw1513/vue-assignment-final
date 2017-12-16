@@ -3,7 +3,8 @@
     {{myscore}}
     <div class="columns">
   <div class="column is-three-fifths">
-    <canvas v-if="statusDraw === '1'" id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
+    <button @click="clearDraw()">Clear</button>
+    <canvas v-if="statusDraw === '1'"" id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
     <canvas v-if="statusDraw === '0'" id="myCanvas"  width="500" height="500"></canvas>
   </div>
   <div class="column">
@@ -30,9 +31,9 @@
 <div class="columns is-mobile">
   <div class="column is-half is-offset-one-quarter"> 
     <br>
-  <input  type="text" class="input is-rounded"  v-model="resultQuestion">
+  <input v-if="statusDraw === '0'" type="text" class="input is-rounded"  v-model="resultQuestion">
   <br><br>
-  <button  @click="checkResult(resultQuestion)" class="button is-primary is-outlined">ส่งคำตอบ</button>
+  <button  v-if="statusDraw === '0'" @click="checkResult(resultQuestion)" class="button is-primary is-outlined">ส่งคำตอบ</button>
   <button class="button is-info is-outlined " @click="backPage()">ย้อนหลัง</button>  
   <br><br>
   </div> 
@@ -92,6 +93,9 @@ export default {
       'saveScore',
       'deleteDraw'
     ]),
+    clearDraw () {
+      this.ctx.clearRect(0, 0, 500, 500)
+    },
     copy () {
       this.c = document.getElementById('myCanvas')
       this.ctx = this.c.getContext('2d')
