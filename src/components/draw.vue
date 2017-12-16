@@ -1,9 +1,12 @@
 <template>
   <div class="hello" >
-    {{myscore}}
+    <a class="button is-large">
+  {{myscore}} <button v-if="statusDraw === '1'" @click="clearDraw()">Clear</button>
+</a>
+    
     <div class="columns">
   <div class="column is-three-fifths">
-    <button @click="clearDraw()">Clear</button>
+    
     <canvas v-if="statusDraw === '1'" id="myCanvas" width="500" height="500" @mousemove="drawLine($event)" @mousedown="startDraw($event)" @mouseup="stopDraw"></canvas>
     <canvas v-if="statusDraw === '0'" id="myCanvas"  width="500" height="500"></canvas>
   </div>
