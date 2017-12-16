@@ -131,7 +131,7 @@ export const store = new Vuex.Store({
     },
     logout () {
       firebase.auth().signOut()
-      router.push('/login')
+      router.push('/')
     },
     setting (context) {
       var dataQ = []
